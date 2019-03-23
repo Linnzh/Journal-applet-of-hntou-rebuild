@@ -1,0 +1,36 @@
+<!--index.wxml-->
+
+<!-- 1.Serach -->
+<van-search
+    value="{{ searchValue }}"
+    placeholder="请输入搜索关键词"
+    use-action-slot
+    bind:change="onChange"
+    bind:search="onSearch"
+  >
+    <view slot="action" bind:tap="onSearch">搜索</view>
+</van-search>
+
+<!-- 2.Tab标签：最新发布/近期热门 -->
+<van-tabs swipeable>
+  <!-- 2.1 最新发布 -->
+  <van-tab title="最新发布">
+    <!-- 2.1.1 文章列表 -->
+    <view wx:for='{{ latest }}' wx:for-item='latest' wx:key='k_latest' wx:for-index='i_latest' class='van-hairline--surround mglr-10'>
+      <!-- 2.1.1.1 来自栏目-->
+      <view>
+        <text class='f-small'>来自栏目：</text>
+        <button class='f-small btn-none btn-tag' data-tid='{{ latest.col.tid }}' data-tag='{{ latest.col.tag }}' bindtap=''>{{ latest.col.tag }}</button>
+      </view>
+      <!-- 2.1.1.2 文章简略信息-->
+      <view class='' bindtap='jumpPage' data-aid='{{ latest.aid }}'>
+        
+      </view>
+    </view>
+  </van-tab>
+
+  <!-- 2.2 近期热门 -->
+  <van-tab title="近期热门">
+  
+  </van-tab>
+</van-tabs>

@@ -1,0 +1,4 @@
+<!--pages/search/search.wxml-->
+
+<!-- 1. -->
+<text>{{ searchValue }}</text>
