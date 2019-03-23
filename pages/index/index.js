@@ -2,8 +2,8 @@
 //获取应用实例
 const app = getApp()
 let utils = require('../../utils/request.js');
-// let that = this;
-var that = this;
+let that = this;
+// var that = this;
 
 Page({
 
@@ -18,6 +18,7 @@ Page({
   // =============================系统方法=============================
   onLoad: function(options) {
     this.latestRelease();
+    this.recentlyPopular();
   },
 
 
@@ -71,7 +72,62 @@ Page({
     }
   },
 
+  // 近期热门
+  recentlyPopular(){
+    if (app.isLoggedIn()) {
+      let uid = wx.getStorageSync('uid');
+      let url = app.globalData.baseUrl + 'index_recently_popular.php';
+      let data = {
+        uid: uid
+      };
+      utils.request(url, data).then(() => {
+        let res = app.netWorkData.result;
+        this.setData({
+          recently: res
+        })
+      })
+    } else {
+      let url = app.globalData.baseUrl + 'index_recently_popular.php';
+      let data = {};
+      utils.request(url, data).then(() => {
+        let res = app.netWorkData.result;
+        this.setData({
+          recently: res
+        })
+      })
+    }
+  },
 
+  // 跳转至“栏目”详情：传递 tid
+  jumpColumn(event){
+    let tid = event.currentTarget.dataset.tid;
+    wx.navigateTo({
+      url: '/pages/column/column?tid=' + tid
+    })
+  },
+
+  // 跳转至“文章”详情：传递 aid favorite，并添加点击量
+  jumpPage(event){
+    let aid = event.currentTarget.dataset.aid;
+    let favorite = event.currentTarget.dataset.favorite;
+    app.addViews(aid);
+    wx.navigateTo({
+      url: '/pages/article/article?aid=' + aid + '&favorite=' + favorite
+    })
+  },
+
+
+  // 收藏：检测是否登录
+  like(event){
+    let aid = event.currentTarget.dataset.aid;
+    let favorite = event.currentTarget.dataset.favorite;
+    if(app.isLoggedIn()) {
+      console.log('已授权登录');
+    } else {
+      that.userSignIn();
+      // app.getUserAuth(event);
+    }
+  }
 
 
 })

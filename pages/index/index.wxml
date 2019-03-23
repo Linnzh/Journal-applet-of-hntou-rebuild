@@ -20,17 +20,73 @@
       <!-- 2.1.1.1 来自栏目-->
       <view>
         <text class='f-small'>来自栏目：</text>
-        <button class='f-small btn-none btn-tag' data-tid='{{ latest.col.tid }}' data-tag='{{ latest.col.tag }}' bindtap=''>{{ latest.col.tag }}</button>
+        <button class='f-small btn-none btn-tag' data-tid='{{ latest.col.tid }}' data-tag='{{ latest.col.tag }}' bindtap='jumpColumn'>{{ latest.col.tag }}</button>
       </view>
-      <!-- 2.1.1.2 文章简略信息-->
-      <view class='' bindtap='jumpPage' data-aid='{{ latest.aid }}'>
-        
+      <!-- 2.1.1.2 文章简略信息：标题、摘要、首图-->
+      <view class='' bindtap='jumpPage' data-aid='{{ latest.aid }}' data-favorite='{{ latest.favorite }}'>
+        <view class='flex-item-original abbr-text'>
+          <view class='f-large van-ellipsis'>
+            {{ latest.title }}
+          </view>
+          <view class='f-standard c-gray-selected van-multi-ellipsis--l2'>
+            {{ latest.abstract }}
+          </view>
+        </view>
+        <view class='flex-item-original abbr-img'>
+          <image src='{{ latest.first_img }}'  mode='aspectFit' style="width:160rpx;height:160rpx;"></image>
+        </view>
       </view>
+      <!-- 2.1.1.3 文章简略信息：作者、发布时间间隔、喜欢图标 -->
+      <view class='f-small flex-container mgtb-10'>
+        <view class='flex-item-zoom'>{{ latest.author }}</view>
+        <view class='flex-item-zoom'>{{ latest.time }}</view>
+        <view class='flex-item-original'>
+          <button open-type='getUserInfo' bindgetuserinfo='like' class='btn-star' style="color:{{ latest.favorite ? 'red' : 'black' }}">
+            <van-icon name="star-o" />
+          </button>
+        </view>
+      </view>
+
     </view>
   </van-tab>
 
   <!-- 2.2 近期热门 -->
   <van-tab title="近期热门">
-  
+    <!-- 2.2.1 文章列表 -->
+    <view wx:for='{{ recently }}' wx:for-item='recently' wx:key='k_recently' wx:for-index='i_recently' class='van-hairline--surround mglr-10'>
+      <!-- 2.1.1.1 来自栏目-->
+      <view>
+        <text class='f-small'>来自栏目：</text>
+        <button class='f-small btn-none btn-tag' data-tid='{{ recently.col.tid }}' data-tag='{{ recently.col.tag }}' bindtap='jumpColumn'>{{ recently.col.tag }}</button>
+      </view>
+      <!-- 2.1.1.2 文章简略信息：标题、摘要、首图-->
+      <view class='' bindtap='jumpPage' data-aid='{{ recently.aid }}' data-favorite='{{ recently.favorite }}'>
+        <view class='flex-item-original abbr-text'>
+          <view class='f-large van-ellipsis'>
+            {{ recently.title }}
+          </view>
+          <view class='f-standard c-gray-selected van-multi-ellipsis--l2'>
+            {{ recently.abstract }}
+          </view>
+        </view>
+        <view class='flex-item-original abbr-img'>
+          <image src='{{ recently.first_img }}'  mode='aspectFit' style="width:160rpx;height:160rpx;"></image>
+        </view>
+      </view>
+      <!-- 2.1.1.3 文章简略信息：发布时间间隔、浏览量、喜欢图标 -->
+      <view class='f-small flex-container mgtb-10'>
+        <view class='flex-item-zoom'>{{ recently.time }}</view>
+        <view class='flex-item-zoom'>
+          <van-icon name="password-view" />
+          {{ recently.view }}
+        </view>
+        <view class='flex-item-original'>
+          <button open-type='getUserInfo' bindgetuserinfo='like' class='btn-star' style="color:{{ recently.favorite ? 'red' : 'black' }}">
+            <van-icon name="star-o" />
+          </button>
+        </view>
+      </view>
+
+    </view>
   </van-tab>
 </van-tabs>

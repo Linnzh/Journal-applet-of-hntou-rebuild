@@ -85,6 +85,12 @@ App({
   },
 
 
+  // addViews()：增长浏览量
+  addViews(aid){
+    wx.request({
+      url: that.globalData.baseUrl + 'base_add_views.php?aid=' + aid
+    })
+  },
 
 
 })

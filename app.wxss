@@ -224,9 +224,12 @@ button::after {
 
 /* 文章简略信息 */
 .abbr-text {
+  display: inline-block;
   width: 77.7778%;
 }
 .abbr-img {
+  display: inline-block;
+  /* width: calc(22.2222% - 10px); */
   width: 22.2222%;
   overflow: hidden;
 }
