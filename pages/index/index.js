@@ -1,6 +1,6 @@
 //index.js
 const app = getApp()
-let utils = require('../../utils/request.js');
+let promise = require('../../utils/promise.js');
 let that = this;
 
 Page({
@@ -55,6 +55,7 @@ Page({
       return wx.getStorageSync('uid');
     } else {
       console.log('用户拒绝了授权');
+      return false;
     }
   },
 
@@ -67,8 +68,7 @@ Page({
       let data = {
         uid: uid
       };
-      utils.request(url, data).then(() => {
-        let res = app.netWorkData.result;
+      utils.request(url, data).then((res) => {
         this.setData({
           latest: res
         })
@@ -76,8 +76,7 @@ Page({
     } else {
       let url = app.globalData.baseUrl + 'index_latest_release.php';
       let data = {};
-      utils.request(url, data).then(() => {
-        let res = app.netWorkData.result;
+      promise.request(url, data).then((res) => {
         this.setData({
           latest: res
         })
@@ -93,8 +92,7 @@ Page({
       let data = {
         uid: uid
       };
-      utils.request(url, data).then(() => {
-        let res = app.netWorkData.result;
+      promise.request(url, data).then((res) => {
         this.setData({
           recently: res
         })
@@ -102,8 +100,7 @@ Page({
     } else {
       let url = app.globalData.baseUrl + 'index_recently_popular.php';
       let data = {};
-      utils.request(url, data).then(() => {
-        let res = app.netWorkData.result;
+      promise.request(url, data).then((res) => {
         this.setData({
           recently: res
         })
@@ -141,41 +138,36 @@ Page({
     if(app.isLoggedIn()) {
       console.log('已授权登录');
     } else {
-      this.userSignIn(event);// 返回了 uid
-      // let uid = wx.getStorageSync('uid');
-    }
-
-    // let uid = this.userSignIn(event);
-    let uid = wx.getStorageSync('uid');
-    let url = app.globalData.baseUrl + 'base_switch_favorite.php';
-    let data = {
-      uid: uid,
-      aid: aid,
-      favorite: favorite
-    };
-    utils.request(url, data).then(()=>{
-      let res = app.netWorkData.result;
-      switch(list){
-        case 'latest':{
-          let arr = this.data.latest;
-          arr[index]['favorite'] = res;
-          this.setData({
-            latest: arr
-          })
-          // console.log(arr)
-        }break;
-        case 'recently':{
-          let arr = this.data.recently;
-          arr[index]['favorite'] = res;
-          this.setData({
-            recently: arr
-          })
-        }break;
+      let uid = this.userSignIn(event);
+      if(uid) {
+        // let uid = wx.getStorageSync('uid');
+        let url = app.globalData.baseUrl + 'base_switch_favorite.php';
+        let data = {
+          uid: uid,
+          aid: aid,
+          favorite: favorite
+        };
+        promise.request(url, data).then((res) => {
+          switch (list) {
+            case 'latest': {
+              let arr = this.data.latest;
+              arr[index]['favorite'] = res;
+              this.setData({
+                latest: arr
+              })
+              // console.log(arr)
+            } break;
+            case 'recently': {
+              let arr = this.data.recently;
+              arr[index]['favorite'] = res;
+              this.setData({
+                recently: arr
+              })
+            } break;
+          }
+        })
       }
-    })
-    console.log('uid:' + uid)
-    console.log('aid:' + aid)
-    console.log('favorite:' + favorite)
+    }
   }
 
 

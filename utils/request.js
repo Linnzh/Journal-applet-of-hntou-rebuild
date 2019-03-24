@@ -8,7 +8,7 @@ function request(url, params) {
       method: 'GET',
       success: function (res) {
         app.netWorkData.result = res.data
-        resolve();
+        resolve(res.data);
       }
     })
   });

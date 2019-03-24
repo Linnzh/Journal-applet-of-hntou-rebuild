@@ -1,5 +1,6 @@
 //app.js
 // let that = this;
+let promise = require('/utils/promise.js');
 
 App({
 
@@ -11,36 +12,32 @@ App({
     baseUrl: 'http://localhost:8081/app/applet/'
   },
 
-  // 网络请求返回结果
-  netWorkData: {
-    result: {
-      code: -1,
-      msg: '发起请求失败'
-    }
+  onLaunch: function() {
+    // let login = promise.login()
+    // login.then((res)=>{
+    //   console.log(res)
+    // })
+
+    // let info = promise.info()
+    // info.then((res)=>{
+    //   console.log(res)
+    // }, (res)=>{
+    //   console.log(res)
+    // })
+
+    // let auth = promise.auth()
+    // auth.then(()=>{
+    //   console.log()
+    // })
+
   },
 
-  // 异步执行网络请求：GET
-  request(url, params) {
-    let that = this;
-    let promise = new Promise(function (resolve, reject) {
-      wx.request({
-        url: url,
-        data: params,
-        method: 'GET',
-        success: function (res) {
-          that.netWorkData.result = res.data
-          resolve();
-        }
-      })
-    });
-    return promise;
-  },
 
   // =====================全局基本操作=======================
 
   // isLoggedIn()：检查用户是否已登录。检查本地存储是否有 UID
   isLoggedIn() {
-    if(wx.getStorageSync('uid') !== '') {
+    if (wx.getStorageSync('uid') !== '') {
       return true;
     }
     return false;
@@ -57,9 +54,6 @@ App({
       return true;
     }
     return false;
-
-    // console.log(event)
-    // console.log(event.detail.userInfo)
   },
 
   // userSignIn()：用户登录
@@ -68,21 +62,16 @@ App({
     let name = wx.getStorageSync('name');
     let avatar = wx.getStorageSync('avatar');
     if (name && avatar) {
-      wx.login({
-        success(login) {
-          let code = login.code;
-          let data =  {
-            code: code,
-            name: name,
-            avatar: avatar
-          };
-          that.request(that.globalData.baseUrl+'user_sign_in.php', data).then(() => {
-            let res = that.netWorkData.result;
-            wx.setStorageSync('uid', res);
-            // console.log(res);
-          })
-          // console.log(data);
-        }
+      let login = promise.login().then((res) => {
+        let data = {
+          code: res,
+          name: name,
+          avatar: avatar
+        };
+        promise.request(that.globalData.baseUrl + 'user_sign_in.php', data).then((res) => {
+          wx.setStorageSync('uid', res);
+          console.log(res);
+        })
       })
       return true;
     }
@@ -91,7 +80,7 @@ App({
 
 
   // addViews()：增长浏览量
-  addViews(aid){
+  addViews(aid) {
     wx.request({
       url: this.globalData.baseUrl + 'base_add_views.php?aid=' + aid
     })
