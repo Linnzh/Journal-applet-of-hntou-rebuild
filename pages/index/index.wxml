@@ -12,7 +12,7 @@
 </van-search>
 
 <!-- 2.Tab标签：最新发布/近期热门 -->
-<van-tabs swipeable>
+<van-tabs swipeable bind:change='onRefresh'>
   <!-- 2.1 最新发布 -->
   <van-tab title="最新发布">
     <!-- 2.1.1 文章列表 -->
@@ -20,10 +20,10 @@
       <!-- 2.1.1.1 来自栏目-->
       <view>
         <text class='f-small'>来自栏目：</text>
-        <button class='f-small btn-none btn-tag' data-tid='{{ latest.col.tid }}' data-tag='{{ latest.col.tag }}' bindtap='jumpColumn'>{{ latest.col.tag }}</button>
+        <button class='f-small btn-none btn-tag' data-tid='{{ latest.col.tid }}' data-tag='{{ latest.col.tag }}' bindtap='jumpTopic'>{{ latest.col.tag }}</button>
       </view>
       <!-- 2.1.1.2 文章简略信息：标题、摘要、首图-->
-      <view class='' bindtap='jumpPage' data-aid='{{ latest.aid }}' data-favorite='{{ latest.favorite }}'>
+      <view class='' bindtap='jumpArticle' data-aid='{{ latest.aid }}' data-favorite='{{ latest.favorite }}'>
         <view class='flex-item-original abbr-text'>
           <view class='f-large van-ellipsis'>
             {{ latest.title }}
@@ -41,7 +41,7 @@
         <view class='flex-item-zoom'>{{ latest.author }}</view>
         <view class='flex-item-zoom'>{{ latest.time }}</view>
         <view class='flex-item-original'>
-          <button open-type='getUserInfo' bindgetuserinfo='like' class='btn-star' style="color:{{ latest.favorite ? 'red' : 'black' }}">
+          <button open-type='getUserInfo' bindgetuserinfo='switchLike' data-list='latest' data-aid='{{ latest.aid }}' data-favorite='{{ latest.favorite }}' data-index='{{ i_latest }}' class='btn-star' style="color:{{ latest.favorite ? 'red' : 'black' }}">
             <van-icon name="star-o" />
           </button>
         </view>
@@ -57,10 +57,10 @@
       <!-- 2.1.1.1 来自栏目-->
       <view>
         <text class='f-small'>来自栏目：</text>
-        <button class='f-small btn-none btn-tag' data-tid='{{ recently.col.tid }}' data-tag='{{ recently.col.tag }}' bindtap='jumpColumn'>{{ recently.col.tag }}</button>
+        <button class='f-small btn-none btn-tag' data-tid='{{ recently.col.tid }}' data-tag='{{ recently.col.tag }}' bindtap='jumpTopic'>{{ recently.col.tag }}</button>
       </view>
       <!-- 2.1.1.2 文章简略信息：标题、摘要、首图-->
-      <view class='' bindtap='jumpPage' data-aid='{{ recently.aid }}' data-favorite='{{ recently.favorite }}'>
+      <view class='' bindtap='jumpArticle' data-aid='{{ recently.aid }}' data-favorite='{{ recently.favorite }}'>
         <view class='flex-item-original abbr-text'>
           <view class='f-large van-ellipsis'>
             {{ recently.title }}
@@ -81,7 +81,7 @@
           {{ recently.view }}
         </view>
         <view class='flex-item-original'>
-          <button open-type='getUserInfo' bindgetuserinfo='like' class='btn-star' style="color:{{ recently.favorite ? 'red' : 'black' }}">
+          <button open-type='getUserInfo' bindgetuserinfo='switchLike' data-list='recently' data-aid='{{ recently.aid }}' data-favorite='{{ recently.favorite }}' data-index='{{ i_recently }}' class='btn-star' style="color:{{ recently.favorite ? 'red' : 'black' }}">
             <van-icon name="star-o" />
           </button>
         </view>

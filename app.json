@@ -5,7 +5,8 @@
     "pages/user/user",
     "pages/article/article",
     "pages/search/search",
-    "pages/column/column"
+    "pages/column/column",
+    "pages/topic/topic"
   ],
   "window": {
     "backgroundTextStyle": "light",

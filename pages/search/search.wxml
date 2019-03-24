@@ -1,4 +1,14 @@
 <!--pages/search/search.wxml-->
 
-<!-- 1. -->
-<text>{{ searchValue }}</text>
+<!-- 1.Search -->
+<van-search
+    value="{{ searchValue }}"
+    placeholder="请输入搜索关键词"
+    use-action-slot
+    bind:change="onChange"
+    bind:search="onSearch"
+  >
+    <view slot="action" bind:tap="onSearch">搜索</view>
+</van-search>
+
+<!-- 2.Search Results -->

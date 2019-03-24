@@ -1,4 +1,6 @@
 //app.js
+// let that = this;
+
 App({
 
   // ======================变量设定======================
@@ -55,6 +57,9 @@ App({
       return true;
     }
     return false;
+
+    // console.log(event)
+    // console.log(event.detail.userInfo)
   },
 
   // userSignIn()：用户登录
@@ -73,8 +78,8 @@ App({
           };
           that.request(that.globalData.baseUrl+'user_sign_in.php', data).then(() => {
             let res = that.netWorkData.result;
-            wx.setStorageSync('uid', res.uid);
-            console.log(res);
+            wx.setStorageSync('uid', res);
+            // console.log(res);
           })
           // console.log(data);
         }
@@ -88,7 +93,7 @@ App({
   // addViews()：增长浏览量
   addViews(aid){
     wx.request({
-      url: that.globalData.baseUrl + 'base_add_views.php?aid=' + aid
+      url: this.globalData.baseUrl + 'base_add_views.php?aid=' + aid
     })
   },
 
