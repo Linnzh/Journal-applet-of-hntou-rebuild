@@ -1,2 +1,36 @@
 <!--pages/topic/topic.wxml-->
-<view>{{ tid }}</view>
+
+<!-- 1.栏目名称-巨幕 -->
+<view class='jumbotron'>
+  <text>{{ topic.tag }}</text>
+  <button open-type='getUserInfo' bindgetuserinfo='subscribe' plain='true' data-tid='{{ topic.tid }}' data-subscribe='{{ topic.subscribe }}'>{{ topic.subscribe ? '取消订阅' : '添加订阅' }}</button>
+</view>
+
+<!-- 2.文章列表 -->
+<view wx:for='{{ topic.articles }}' wx:for-item='articles' wx:key='k_articles' wx:for-index='i_articles' class='mglr-10'>
+  <!-- 2.1 文章简略信息：标题、摘要、首图-->
+  <view class='' bindtap='jumpArticle' data-aid='{{ articles.aid }}' data-favorite='{{ articles.favorite }}'>
+    <view class='flex-item-original abbr-text'>
+      <view class='f-large van-ellipsis'>
+        {{ articles.title }}
+      </view>
+      <view class='f-standard c-gray-selected van-multi-ellipsis--l2'>
+        {{ articles.abstract }}
+      </view>
+    </view>
+    <view class='flex-item-original abbr-img'>
+      <image src='{{ articles.first_img }}' mode='aspectFit' style="width:160rpx;height:160rpx;"></image>
+    </view>
+  </view>
+  <!-- 2.2 文章简略信息：作者、发布时间间隔、喜欢图标 -->
+  <view class='f-small flex-container mgtb-10'>
+    <view class='flex-item-zoom'>{{ articles.author }}</view>
+    <view class='flex-item-zoom'>{{ articles.time }}</view>
+    <view class='flex-item-original'>
+      <button open-type='getUserInfo' bindgetuserinfo='switchLike' data-list='articles' data-aid='{{ articles.aid }}' data-favorite='{{ articles.favorite }}' data-index='{{ i_articles }}' class='btn-star' style="color:{{ articles.favorite ? 'red' : 'black' }}">
+        <van-icon name="star-o" />
+      </button>
+    </view>
+  </view>
+
+</view>
