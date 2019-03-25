@@ -1,8 +1,6 @@
 // pages/user/user.js
 const app = getApp()
-let promise = require('../../utils/promise.js');
-let that = this;
-
+let promise = require('../../utils/promise.js')
 
 Page({
 
@@ -14,7 +12,7 @@ Page({
 
   // =============================系统方法=============================
   onLoad: function (options) {
-    this.output()
+    
   },
 
   // ==============================绑定方法============================
@@ -58,28 +56,6 @@ Page({
       // 用户未登录
       let signup = this.signUp()
     }
-  },
-
-  output() {
-    let that = this
-    let name = wx.getStorageSync('name')
-    let avatar = wx.getStorageSync('avatar')
-    let login = promise.login()
-    login.then(
-      function(data){
-        that.setData({
-          test: data
-        })
-        let code = data
-        let signin = that.signUp(name, avatar, code)
-        signin.then((res)=>{
-          let uid = res
-          console.log(uid)
-        })
-      }
-    )
-
-    
   },
   
 
