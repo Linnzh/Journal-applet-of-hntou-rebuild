@@ -1,7 +1,6 @@
 //index.js
 const app = getApp()
 let promise = require('../../utils/promise.js');
-let that = this;
 
 Page({
 
@@ -68,7 +67,7 @@ Page({
       let data = {
         uid: uid
       };
-      utils.request(url, data).then((res) => {
+      promise.request(url, data).then((res) => {
         this.setData({
           latest: res
         })
@@ -120,10 +119,11 @@ Page({
   // 跳转至“文章”详情：传递 aid favorite，并添加点击量
   jumpArticle(event){
     let aid = event.currentTarget.dataset.aid;
-    let favorite = event.currentTarget.dataset.favorite;
+    // let favorite = event.currentTarget.dataset.favorite;
     app.addViews(aid);
     wx.navigateTo({
-      url: '/pages/article/article?aid=' + aid + '&favorite=' + favorite
+      // url: '/pages/article/article?aid=' + aid + '&favorite=' + favorite
+      url: '/pages/article/article?aid=' + aid
     })
   },
 

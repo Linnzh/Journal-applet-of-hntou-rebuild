@@ -1,7 +1,6 @@
 // pages/topic/topic.js
 const app = getApp()
-let utils = require('../../utils/request.js');
-let that = this;
+let promise = require('../../utils/promise.js');
 
 Page({
 

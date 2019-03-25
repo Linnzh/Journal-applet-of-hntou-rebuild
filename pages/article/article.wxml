@@ -1,2 +1,24 @@
 <!--pages/article/article.wxml-->
-<text>pages/article/article.wxml</text>
+
+<!-- 1.文章标题、发布时间、收藏状态等信息 -->
+<view class='mglr-10 mgtb-10'>
+  <view class='f-larger'>{{ article.title }}</view>
+  <view class='flex-container mrt-10'>
+    <view class='flex-item-expand c-gray'>{{ article.time }}</view>
+    <button open-type='getUserInfo' bindgetuserinfo='switchLike' data-aid='{{ aid }}' class='btn-star flex-item-original' style="color: red">
+      <van-icon name="star-o" />
+    </button>
+  </view>
+</view>
+
+<!-- 2.HTML字符串富文本内容 -->
+<view class='mglr-10 mgtb-10'>
+  <rich-text nodes='{{ article.html }}'></rich-text>
+</view>
+
+<!-- 3.返回顶部图标 -->
+<view>
+  <button bindtap='backtop' class='btn-plain fixed'>
+    <image src='backtop.png' style='width:32px;height:32px;'></image>
+  </button>
+</view>

@@ -1,1 +1,10 @@
 /* pages/article/article.wxss */
+
+.article {
+  font-size: 12pt;
+}
+.fixed {
+  position: fixed;
+  bottom: 30px;
+  right: 10px;
+}
