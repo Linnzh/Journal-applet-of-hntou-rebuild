@@ -150,17 +150,20 @@ Page({
         // 根据不同列表的点击，来识别哪个图标应该变色
         switch (list) {
           case 'latest': {
-            let arr = this.data.latest;
-            arr[index]['favorite'] = res;
+            // let arr = this.data.latest;
+            // arr[index]['favorite'] = res;
             this.setData({
-              latest: arr
+              // latest: arr
+              // ["latest[" + index + "]['favorite']"] : res
+              [`latest[${index}].favorite`]: res
             })
           } break;
           case 'recently': {
-            let arr = this.data.recently;
-            arr[index]['favorite'] = res;
+            // let arr = this.data.recently;
+            // arr[index]['favorite'] = res;
             this.setData({
-              recently: arr
+              // recently: arr
+              [`recently[${index}].favorite`]: res
             })
           } break;
         }

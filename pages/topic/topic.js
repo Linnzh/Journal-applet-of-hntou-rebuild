@@ -67,19 +67,22 @@ Page({
     let subscribe = event.currentTarget.dataset.subscribe
     
     if(app.checkUser()) {
-      // app.switchSubscribe(this.data.uid, this.data.tid, subscribe).then((res) => {
-      //   let arr = this.data.topic
-      //   arr['subscribe'] = res
-      //   this.setData({
-      //     topic: arr
-      //   })
-      // })
-      let arr = this.data.topic
-      arr['subscribe'] = !this.data.topic['subscribe']
-      this.setData({
-        topic: arr
+      app.switchSubscribe(this.data.uid, this.data.tid, subscribe).then((res) => {
+        // let arr = this.data.topic
+        // arr['subscribe'] = res
+        this.setData({
+          // topic: arr
+          [`topic.subscribe`]: res
+        })
       })
-      app.switchSubscribe(this.data.uid, this.data.tid, subscribe)
+
+      // let arr = this.data.topic
+      // arr['subscribe'] = !this.data.topic['subscribe']
+      // this.setData({
+      //   topic: arr
+      // })
+      // app.switchSubscribe(this.data.uid, this.data.tid, subscribe)
+
     } else {
       let info = app.getUserAuth(event)
       if (info) {
@@ -105,20 +108,22 @@ Page({
 
     if(app.checkUser()) {
       // 换色
-      // app.switchFavorite(this.data.uid, aid, favorite).then((res)=>{
-      //   let arr = this.data.topic
-      //   arr['articles'][index]['favorite'] = res
-      //   this.setData({
-      //     topic: arr
-      //   })
-      // })
-
-      let arr = this.data.topic
-      arr['articles'][index]['favorite'] = !this.data.topic['articles'][index]['favorite']
-      this.setData({
-        topic: arr
+      app.switchFavorite(this.data.uid, aid, favorite).then((res)=>{
+        // let arr = this.data.topic
+        // arr['articles'][index]['favorite'] = res
+        this.setData({
+          // topic: arr
+          // [`topic['articles'][${index}].favorite`]: res
+          [`topic.articles[${index}].favorite`]: res
+        })
       })
-      app.switchFavorite(this.data.uid, aid, favorite)
+
+      // let arr = this.data.topic
+      // arr['articles'][index]['favorite'] = !this.data.topic['articles'][index]['favorite']
+      // this.setData({
+      //   topic: arr
+      // })
+      // app.switchFavorite(this.data.uid, aid, favorite)
       
     } else {
       let info = app.getUserAuth(event)

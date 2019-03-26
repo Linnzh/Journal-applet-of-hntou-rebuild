@@ -1,1 +1,12 @@
 /* pages/search/search.wxss */
+.top-view {
+  z-index: 3000;
+}
+.jumbotron > text {
+  padding-top:40rpx;
+  padding-bottom:40rpx;
+  text-align:center;
+}
+.h-200 {
+  height: 240px;
+}

@@ -12,7 +12,7 @@
       <!-- 1.1.1 栏目-巨幕 -->
       <view class='jumbotron'>
         <text class='f-large'>{{ section.tag }}</text>
-        <button open-type='getUserInfo' bindgetuserinfo='subscribe' plain='true' data-tid='{{ section.tid }}' data-subscribe='{{ section.subscribe }}'>{{ section.subscribe ? '取消订阅' : '添加订阅' }}</button>
+        <button open-type='getUserInfo' bindgetuserinfo='switchSubscribe' plain='true' data-tid='{{ section.tid }}' data-subscribe='{{ section.subscribe }}' data-index='{{ i_sections }}'>{{ section.subscribe ? '取消订阅' : '添加订阅' }}</button>
       </view>
 
       <!-- 1.1.2 栏目-文章列表 -->
@@ -36,7 +36,7 @@
           <view class='flex-item-zoom'>{{ articles.author }}</view>
           <view class='flex-item-zoom'>{{ articles.time }}</view>
           <view class='flex-item-original'>
-            <button open-type='getUserInfo' bindgetuserinfo='switchLike' data-list='articles' data-aid='{{ articles.aid }}' data-favorite='{{ articles.favorite }}' data-index='{{ i_articles }}' class='btn-star' style="color:{{ articles.favorite ? 'red' : 'black' }}">
+            <button open-type='getUserInfo' bindgetuserinfo='switchFavorite' data-list='articles' data-aid='{{ articles.aid }}' data-favorite='{{ articles.favorite }}' data-index='{{ i_articles }}' data-tindex='{{ i_sections }}' class='btn-star' style="color:{{ articles.favorite ? 'red' : 'black' }}">
               <van-icon name="star-o" />
             </button>
           </view>
