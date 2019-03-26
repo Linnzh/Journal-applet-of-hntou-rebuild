@@ -23,6 +23,21 @@ function collapse(current = 0, previous  = 0, active = 0)
   }
 }
 
+
+/**
+ * checkToMove(selected = 0, array = [])
+ * 
+ * 选中即从列表移除
+ * selected  被选中的数组索引
+ * array     被选中项所在数组
+ */
+function checkToMove(selected = 0, array = [])
+{
+  array.splice(selected, 1);
+  return array;
+}
+
 module.exports = {
-  collapse: collapse
+  collapse: collapse,
+  checkToMove: checkToMove
 }

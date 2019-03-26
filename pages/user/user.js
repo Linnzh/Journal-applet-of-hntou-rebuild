@@ -9,7 +9,8 @@ Page({
   data: {
     current: 0,
     previous: 0,
-    active: 0
+    active: 0,
+    uid: 0
   },
 
 
@@ -24,7 +25,8 @@ Page({
 
     if(wx.getStorageSync('uid')) {
       this.setData({
-        signin: true
+        signin: true,
+        uid: wx.getStorageSync('uid')
       })
     } else {
       this.setData({
@@ -42,7 +44,8 @@ Page({
   myFavorites(){
     let url = app.globalData.baseUrl + 'user_favorite_list.php'
     let data = {
-      uid: wx.getStorageSync('uid')
+      // uid: wx.getStorageSync('uid')
+      uid: this.data.uid
     }
     promise.request(url, data).then((res)=>{
       this.setData({
@@ -55,7 +58,8 @@ Page({
   mySubscribes(){
     let url = app.globalData.baseUrl + 'user_subscribe_list.php'
     let data = {
-      uid: wx.getStorageSync('uid')
+      // uid: wx.getStorageSync('uid')
+      uid: this.data.uid
     }
     promise.request(url, data).then((res) => {
       this.setData({
@@ -64,6 +68,7 @@ Page({
     })
   },
 
+  // 手风琴效果
   collapse(event){
     this.data.current = event.currentTarget.dataset.current
     console.log(this.data.current)
@@ -73,6 +78,39 @@ Page({
       active: res.active
     })
     console.log(this.data.active)
+  },
+
+  // 取消收藏
+  cancelFavorite(event){
+    let aid = event.currentTarget.dataset.aid
+    let url = app.globalData.baseUrl + 'user_cancel_favorite.php'
+    let data = {
+      uid: this.data.uid,
+      aid: aid
+    }
+    promise.request(url, data).then(()=>{
+      let arr = mobility.checkToMove(event.currentTarget.dataset.index, this.favorites)
+      this.setData({
+        favorites: arr
+      })
+    })
+  },
+
+
+  // 取消订阅
+  cancelSubscribe(event){
+    let tid = event.currentTarget.dataset.tid
+    let url = app.globalData.baseUrl + 'user_cancel_subscribe.php'
+    let data = {
+      uid: this.data.uid,
+      tid: tid
+    }
+    promise.request(url, data).then(() => {
+      let arr = mobility.checkToMove(event.currentTarget.dataset.index, this.subscribes)
+      this.setData({
+        subscribes: arr
+      })
+    })
   },
 
 

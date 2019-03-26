@@ -23,7 +23,7 @@
     <view class='collapse-item flex-container'>
       <!-- 手风琴单体 -->
       <text bindtap='jumpArticle' data-aid='{{ favorite.aid }}' class="flex-item-expand f-standard lh-46">{{ favorite.title }}</text>
-      <button bindtap='favorite' data-aid='{{ favorite.aid }}' data-favorite='{{ favorite.favorite }}' class='flex-item-shrink f-standard btn-cancel lh-46' hover-class='btn-cancel-hover'>取消收藏</button>
+      <button bindtap='cancelFavorite' data-index='{{ i_favorites }}' data-aid='{{ favorite.aid }}' data-favorite='{{ favorite.favorite }}' class='flex-item-shrink f-standard btn-cancel lh-46' hover-class='btn-cancel-hover'>取消收藏</button>
     </view>
   </view>
 
@@ -38,7 +38,7 @@
     <view class='collapse-item flex-container'>
       <!-- 手风琴单体 -->
       <text bindtap='jumpArticle' data-aid='{{ subscribe.tid }}' class="flex-item-expand f-standard lh-46">{{ subscribe.tag }}</text>
-      <button bindtap='subscribe' data-aid='{{ subscribe.tid }}' data-favorite='{{ subscribe.subscribe }}' class='flex-item-shrink f-standard btn-cancel lh-46' hover-class='btn-cancel-hover'>取消订阅</button>
+      <button bindtap='cancelSubscribe' data-index='{{ i_subscribes }}' data-aid='{{ subscribe.tid }}' data-favorite='{{ subscribe.subscribe }}' class='flex-item-shrink f-standard btn-cancel lh-46' hover-class='btn-cancel-hover'>取消订阅</button>
     </view>
   </view>
 
