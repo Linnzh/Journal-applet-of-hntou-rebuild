@@ -3,7 +3,7 @@
 <!-- 1.栏目名称-巨幕 -->
 <view class='jumbotron'>
   <text>{{ topic.tag }}</text>
-  <button open-type='getUserInfo' bindgetuserinfo='subscribe' plain='true' data-tid='{{ topic.tid }}' data-subscribe='{{ topic.subscribe }}'>{{ topic.subscribe ? '取消订阅' : '添加订阅' }}</button>
+  <button open-type='getUserInfo' bindgetuserinfo='switchSubscribe' plain='true' data-tid='{{ topic.tid }}' data-subscribe='{{ topic.subscribe }}'>{{ topic.subscribe ? '取消订阅' : '添加订阅' }}</button>
 </view>
 
 <!-- 2.文章列表 -->
@@ -27,7 +27,7 @@
     <view class='flex-item-zoom'>{{ articles.author }}</view>
     <view class='flex-item-zoom'>{{ articles.time }}</view>
     <view class='flex-item-original'>
-      <button open-type='getUserInfo' bindgetuserinfo='switchLike' data-list='articles' data-aid='{{ articles.aid }}' data-favorite='{{ articles.favorite }}' data-index='{{ i_articles }}' class='btn-star' style="color:{{ articles.favorite ? 'red' : 'black' }}">
+      <button open-type='getUserInfo' bindgetuserinfo='switchFavorite' data-list='articles' data-aid='{{ articles.aid }}' data-favorite='{{ articles.favorite }}' data-index='{{ i_articles }}' class='btn-star' style="color:{{ articles.favorite ? 'red' : 'black' }}">
         <van-icon name="star-o" />
       </button>
     </view>

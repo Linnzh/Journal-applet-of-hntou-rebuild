@@ -35,7 +35,7 @@ Page({
 
   // 关键词搜索
   onSearch(event){
-    let kw = that.data.searchValue;
+    let kw = this.data.searchValue;
     wx.navigateTo({
       url: '/pages/search/search?kw=' + kw
     })
@@ -47,9 +47,17 @@ Page({
   },
 
   // 切换标签页时刷新数据
-  onRefresh(){
-    this.latestRelease();
-    this.recentlyPopular();
+  onRefresh(event){
+    console.log(event.detail.index)
+    let tabIndex = event.detail.index
+    switch(tabIndex){
+      case 0:{
+        this.latestRelease()
+      } break;
+      case 1:{
+        this.recentlyPopular()
+      } break;
+    }
   },
 
   // 用户登录/注册
@@ -66,11 +74,11 @@ Page({
 
   // 最新发布
   latestRelease(){
-    if (app.checkUser()) {
-      let uid = wx.getStorageSync('uid');
+    if (this.data.uid) {
+      // let uid = wx.getStorageSync('uid');
       let url = app.globalData.baseUrl + 'index_latest_release.php';
       let data = {
-        uid: uid
+        uid: this.data.uid
       };
       promise.request(url, data).then((res) => {
         this.setData({
@@ -90,11 +98,11 @@ Page({
 
   // 近期热门
   recentlyPopular(){
-    if (app.checkUser()) {
-      let uid = wx.getStorageSync('uid');
+    if (this.data.uid) {
+      // let uid = wx.getStorageSync('uid');
       let url = app.globalData.baseUrl + 'index_recently_popular.php';
       let data = {
-        uid: uid
+        uid: this.data.uid
       };
       promise.request(url, data).then((res) => {
         this.setData({
@@ -127,42 +135,57 @@ Page({
 
 
   // 收藏：检测是否登录
-  switchLike(event){
+  switchFavorite(event){
+    // 1.获取必要数据
     let list = event.currentTarget.dataset.list;
     let aid = event.currentTarget.dataset.aid;
     let favorite = event.currentTarget.dataset.favorite;
     let index = event.currentTarget.dataset.index;
-    if(app.checkUser()) {
+
+    // 2.检查登录状态
+    if (this.data.uid) {
+      // 已登录
       console.log('已授权登录');
+      app.switchFavorite(this.data.uid, aid, favorite).then((res)=>{
+        // 根据不同列表的点击，来识别哪个图标应该变色
+        switch (list) {
+          case 'latest': {
+            let arr = this.data.latest;
+            arr[index]['favorite'] = res;
+            this.setData({
+              latest: arr
+            })
+          } break;
+          case 'recently': {
+            let arr = this.data.recently;
+            arr[index]['favorite'] = res;
+            this.setData({
+              recently: arr
+            })
+          } break;
+        }
+      })
     } else {
-      let uid = this.userSignIn(event);
-      if(uid) {
-        // let uid = wx.getStorageSync('uid');
-        let url = app.globalData.baseUrl + 'base_switch_favorite.php';
-        let data = {
-          uid: uid,
-          aid: aid,
-          favorite: favorite
-        };
-        promise.request(url, data).then((res) => {
+      // 未登录，提示登录
+      let info = app.getUserAuth(event)
+      if(info) {
+        app.userSignIn(info.name,  info.avatar).then((res)=>{
+          this.setData({
+            uid: res
+          })
+
+          // 获得授权后刷新相应的列表信息
           switch (list) {
             case 'latest': {
-              let arr = this.data.latest;
-              arr[index]['favorite'] = res;
-              this.setData({
-                latest: arr
-              })
-              // console.log(arr)
+              this.latestRelease()
             } break;
             case 'recently': {
-              let arr = this.data.recently;
-              arr[index]['favorite'] = res;
-              this.setData({
-                recently: arr
-              })
+              this.recentlyPopular()
             } break;
           }
         })
+      } else {
+        console.log('用户拒绝了授权！')
       }
     }
   }

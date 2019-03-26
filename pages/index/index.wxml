@@ -41,7 +41,7 @@
         <view class='flex-item-zoom'>{{ latest.author }}</view>
         <view class='flex-item-zoom'>{{ latest.time }}</view>
         <view class='flex-item-original'>
-          <button open-type='getUserInfo' bindgetuserinfo='switchLike' data-list='latest' data-aid='{{ latest.aid }}' data-favorite='{{ latest.favorite }}' data-index='{{ i_latest }}' class='btn-star' style="color:{{ latest.favorite ? 'red' : 'black' }}">
+          <button open-type='getUserInfo' bindgetuserinfo='switchFavorite' data-list='latest' data-aid='{{ latest.aid }}' data-favorite='{{ latest.favorite }}' data-index='{{ i_latest }}' class='btn-star' style="color:{{ latest.favorite ? 'red' : 'black' }}">
             <van-icon name="star-o" />
           </button>
         </view>
@@ -81,7 +81,7 @@
           {{ recently.view }}
         </view>
         <view class='flex-item-original'>
-          <button open-type='getUserInfo' bindgetuserinfo='switchLike' data-list='recently' data-aid='{{ recently.aid }}' data-favorite='{{ recently.favorite }}' data-index='{{ i_recently }}' class='btn-star' style="color:{{ recently.favorite ? 'red' : 'black' }}">
+          <button open-type='getUserInfo' bindgetuserinfo='switchFavorite' data-list='recently' data-aid='{{ recently.aid }}' data-favorite='{{ recently.favorite }}' data-index='{{ i_recently }}' class='btn-star' style="color:{{ recently.favorite ? 'red' : 'black' }}">
             <van-icon name="star-o" />
           </button>
         </view>

@@ -16,26 +16,21 @@ Page({
 
   // =============================系统方法=============================
   onLoad: function (options) {
-    let name = wx.getStorageSync('name');
-    let avatar = wx.getStorageSync('avatar');
-    this.setData({
-      name: name,
-      avatar: avatar
-    })
-
-    if(wx.getStorageSync('uid')) {
+    if(app.checkUser()) {
       this.setData({
+        name: wx.getStorageSync('name'),
+        avatar: wx.getStorageSync('avatar'),
+        uid: wx.getStorageSync('uid'),
         signin: true,
-        uid: wx.getStorageSync('uid')
       })
+
+      this.myFavorites()
+      this.mySubscribes()
     } else {
       this.setData({
         signin: false
       })
     }
-
-    this.myFavorites()
-    this.mySubscribes()
   },
 
   onPullDownRefresh: function () {
@@ -44,6 +39,22 @@ Page({
   },
 
   // ==============================绑定方法============================
+
+  mySignin(event){
+    let info = app.getUserAuth(event)
+    if(info) {
+      app.userSignIn(info.name, info.avatar).then((res) => {
+        this.setData({
+          uid: res,
+          signin: true
+        })
+        this.myFavorites()
+        this.mySubscribes()
+      })
+    } else {
+      console.log('用户拒绝了授权！')
+    }
+  },
 
   // 我的喜欢-列表
   myFavorites(){

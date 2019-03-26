@@ -35,31 +35,37 @@ App({
       let avatar = info.avatarUrl;
       wx.setStorageSync('name', name);
       wx.setStorageSync('avatar', avatar);
-      return true;
+      return {
+        name: name,
+        avatar: avatar
+      }
     }
-    return false;
+    return null
   },
 
   // userSignIn()：用户登录
-  userSignIn() {
-    let that = this;
-    let name = wx.getStorageSync('name');
-    let avatar = wx.getStorageSync('avatar');
-    if (name && avatar) {
-      let login = promise.login().then((res) => {
-        let data = {
-          code: res,
-          name: name,
-          avatar: avatar
-        };
-        promise.request(that.globalData.baseUrl + 'user_sign_in.php', data).then((res) => {
-          wx.setStorageSync('uid', res);
-          console.log(res);
-        })
+  userSignIn(name, avatar) {
+    let that = this
+    let promise = new Promise(function (resolve, reject) {
+      wx.login({
+        success(res) {
+          wx.request({
+            url: that.globalData.baseUrl + 'user_sign_in.php',
+            data: {
+              name: name,
+              avatar: avatar,
+              code: res.code
+            },
+            method: 'GET',
+            success(res) {
+              wx.setStorageSync('uid', res.data)
+              resolve(res.data)
+            }
+          })
+        }
       })
-      return true;
-    }
-    return false;
+    })
+    return promise
   },
 
 
@@ -70,6 +76,7 @@ App({
     })
   },
 
+  // 跳转至 article
   jumpArticle(aid) {
     this.addViews(aid)
     wx.navigateTo({
@@ -77,22 +84,54 @@ App({
     })
   },
 
+  // 跳转至 topic
   jumpTopic(tid) {
     wx.navigateTo({
       url: '/pages/topic/topic?tid=' + tid
     })
   },
 
-  switchFavorite(uid, aid){
+
+  // 切换【喜欢】状态
+  switchFavorite(uid, aid, favorite){
     let url = this.globalData.baseUrl + 'base_switch_favorite.php'
-    let data = {
-      uid: uid,
-      aid: aid
-    }
-    promise.request(url, data).then((res)=>{
-      // 1.设置 favorite 的值为 res 返回的值
+    let promise = new Promise(function (resolve, reject) {
+      wx.request({
+        url: url,
+        data: {
+          uid: uid,
+          aid: aid,
+          favorite: favorite
+        },
+        method: 'GET',
+        success(res) {
+          resolve(res.data)
+        }
+      })
     })
+    return promise
   },
+
+
+  // 切换【订阅】状态
+  switchSubscribe(uid, tid, subscribe) {
+    let url = this.globalData.baseUrl + 'base_switch_subscribe.php'
+    let promise = new Promise(function (resolve, reject) {
+      wx.request({
+        url: url,
+        data: {
+          uid: uid,
+          tid: tid,
+          subscribe: subscribe
+        },
+        method: 'GET',
+        success(res) {
+          resolve(res.data)
+        }
+      })
+    })
+    return promise
+  }
 
 
 })
