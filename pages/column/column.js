@@ -6,12 +6,20 @@ Page({
 
   // =========================绑定变量数据=============================
   data: {
-    sections: {}
+    // sections: {}
   },
 
 
   // =============================系统方法=============================
   onLoad: function (options) {
+    // 1.检查用户是否存在
+    if (app.checkUser()) {
+      this.setData({
+        uid: wx.getStorageSync('uid')
+      })
+    }
+
+
     this.allSections();
   },
   

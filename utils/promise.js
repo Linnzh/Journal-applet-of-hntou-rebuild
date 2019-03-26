@@ -69,53 +69,56 @@ function signin(name, avatar, code) {
 }
 
 
-// function auth() {
-//   let promise = new Promise(function(resolve, reject) {
-//     wx.getSetting({
-//       success(res) {
-//         if (!res.authSetting['scope.userInfo']) {
-//           wx.authorize({
-//             scope: 'userInfo',
-//             success() {
-//               resolve()
-//             }
-//           })
-//         }
-//       }
-//     })
-//   })
-//   return promise
-// }
+/**
+ * switchFavorite(uid, aid, favorite)
+ * 
+ * 切换“喜欢”状态
+ * 返回切换后的“喜欢”状态
+ */
+function switchFavorite(uid = 0, aid = 0, favorite = false) {
+  let promise = new Promise(function(resolve, reject){
+    wx.request({
+      url: baseUrl + 'base_switch_favorite.php',
+      data: {
+        uid: uid,
+        aid: aid,
+        favorite: favorite
+      },
+      method: 'GET',
+      success(res) {
+        resolve(res.data)
+      }
+    })
+  })
+}
 
 
 /**
- * info()
+ * switchSubscribe(uid, tid, subscribe)
  * 
- * 在已经授权的情况下，获取用户信息
- * 返回一个对象，包含 name 和 avatar
+ * 切换“订阅”状态
+ * 返回切换后的“订阅”状态
  */
-// function info() {
-//   let promise = new Promise(function(resolve, reject) {
-//     wx.getUserInfo({
-//       success(res) {
-//         const user_info = res.userInfo
-//         let data = {
-//           name: user_info.nickName,
-//           avatar: user_info.avatarUrl
-//         }
-//         resolve(data)
-//         reject(data)
-//       }
-//     })
-//   })
-//   return promise
-// }
+function switchSubscribe(uid = 0, tid = 0, subscribe = false) {
+  let promise = new Promise(function (resolve, reject) {
+    wx.request({
+      url: baseUrl + 'base_switch_subscribe.php',
+      data: {
+        uid: uid,
+        tid: tid,
+        subscribe: subscribe
+      },
+      method: 'GET',
+      success(res) {
+        resolve(res.data)
+      }
+    })
+  })
+}
 
 
 module.exports = {
   request: request,
   login: login,
   signin: signin,
-  // info: info,
-  // auth: auth
 }

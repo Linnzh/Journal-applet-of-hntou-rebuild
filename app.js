@@ -19,8 +19,8 @@ App({
 
   // =====================全局基本操作=======================
 
-  // isLoggedIn()：检查用户是否已登录。检查本地存储是否有 UID
-  isLoggedIn() {
+  // checkUser()：检查用户是否已登录。检查本地存储是否有 UID
+  checkUser() {
     if (wx.getStorageSync('uid') !== '') {
       return true;
     }
@@ -67,6 +67,30 @@ App({
   addViews(aid) {
     wx.request({
       url: this.globalData.baseUrl + 'base_add_views.php?aid=' + aid
+    })
+  },
+
+  jumpArticle(aid) {
+    this.addViews(aid)
+    wx.navigateTo({
+      url: '/pages/article/article?aid=' + aid
+    })
+  },
+
+  jumpTopic(tid) {
+    wx.navigateTo({
+      url: '/pages/topic/topic?tid=' + tid
+    })
+  },
+
+  switchFavorite(uid, aid){
+    let url = this.globalData.baseUrl + 'base_switch_favorite.php'
+    let data = {
+      uid: uid,
+      aid: aid
+    }
+    promise.request(url, data).then((res)=>{
+      // 1.设置 favorite 的值为 res 返回的值
     })
   },
 

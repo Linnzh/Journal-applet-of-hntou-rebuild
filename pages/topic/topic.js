@@ -13,10 +13,14 @@ Page({
   // =============================系统方法=============================
   onLoad: function (options) {
     let tid = options.tid;
-    // this.setData({
-    //   tid: tid
-    // })
+    this.setData({
+      tid: tid
+    })
     this.specialColumn(tid)
+  },
+
+  onPullDownRefresh: function () {
+    wx.stopPullDownRefresh();
   },
 
 
@@ -42,6 +46,13 @@ Page({
       })
     })
   },
+
+  // 跳转至“文章”详情：传递 aid favorite，并添加点击量
+  jumpArticle(event) {
+    let aid = event.currentTarget.dataset.aid
+    app.jumpArticle(aid)
+  },
+
 
 
 })

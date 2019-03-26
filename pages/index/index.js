@@ -6,14 +6,19 @@ Page({
 
   // =========================绑定变量数据=============================
   data: {
-    latest: {},
-    recently: {},
     searchValue: ''
   },
 
 
   // =============================系统方法=============================
   onLoad: function(options) {
+    // 1.检查用户是否存在
+    if(app.checkUser()) {
+      this.setData({
+        uid: wx.getStorageSync('uid')
+      })
+    }
+
     this.latestRelease();
     this.recentlyPopular();
   },
@@ -61,7 +66,7 @@ Page({
 
   // 最新发布
   latestRelease(){
-    if (app.isLoggedIn()) {
+    if (app.checkUser()) {
       let uid = wx.getStorageSync('uid');
       let url = app.globalData.baseUrl + 'index_latest_release.php';
       let data = {
@@ -85,7 +90,7 @@ Page({
 
   // 近期热门
   recentlyPopular(){
-    if (app.isLoggedIn()) {
+    if (app.checkUser()) {
       let uid = wx.getStorageSync('uid');
       let url = app.globalData.baseUrl + 'index_recently_popular.php';
       let data = {
@@ -109,22 +114,14 @@ Page({
 
   // 跳转至“栏目”详情：传递 tid
   jumpTopic(event){
-    let tid = event.currentTarget.dataset.tid;
-    console.log(tid);
-    wx.navigateTo({
-      url: '/pages/topic/topic?tid=' + tid
-    })
+    let tid = event.currentTarget.dataset.tid
+    app.jumpTopic(tid)
   },
 
   // 跳转至“文章”详情：传递 aid favorite，并添加点击量
   jumpArticle(event){
-    let aid = event.currentTarget.dataset.aid;
-    // let favorite = event.currentTarget.dataset.favorite;
-    app.addViews(aid);
-    wx.navigateTo({
-      // url: '/pages/article/article?aid=' + aid + '&favorite=' + favorite
-      url: '/pages/article/article?aid=' + aid
-    })
+    let aid = event.currentTarget.dataset.aid
+    app.jumpArticle(aid)
   },
 
 
@@ -135,7 +132,7 @@ Page({
     let aid = event.currentTarget.dataset.aid;
     let favorite = event.currentTarget.dataset.favorite;
     let index = event.currentTarget.dataset.index;
-    if(app.isLoggedIn()) {
+    if(app.checkUser()) {
       console.log('已授权登录');
     } else {
       let uid = this.userSignIn(event);
