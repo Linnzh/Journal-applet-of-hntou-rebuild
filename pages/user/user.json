@@ -1,3 +1,6 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "van-swipe-cell": "/dist/swipe-cell/index",
+    "van-icon": "/dist/icon/index"
+  }
 }

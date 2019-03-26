@@ -1,7 +1,5 @@
 // pages/search/search.js
 const app = getApp();
-let utils = require('../../utils/request.js');
-let that = this;
 
 Page({
 

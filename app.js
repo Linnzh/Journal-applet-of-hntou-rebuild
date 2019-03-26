@@ -13,22 +13,6 @@ App({
   },
 
   onLaunch: function() {
-    // let login = promise.login()
-    // login.then((res)=>{
-    //   console.log(res)
-    // })
-
-    // let info = promise.info()
-    // info.then((res)=>{
-    //   console.log(res)
-    // }, (res)=>{
-    //   console.log(res)
-    // })
-
-    // let auth = promise.auth()
-    // auth.then(()=>{
-    //   console.log()
-    // })
 
   },
 

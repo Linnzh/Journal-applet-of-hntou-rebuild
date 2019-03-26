@@ -1,4 +1,56 @@
 <!--pages/user/user.wxml-->
-<text>pages/user/user.wxml</text>
 
-<!-- <view>{{ test }}</view> -->
+<!-- 检测到用户登录时 -->
+<view wx:if='{{ signin }}' class='mglr-10'>
+
+  <!-- 1.用户头像及昵称 -->
+  <view class="userinfo">
+    <image class="userinfo-avatar" src="{{ avatar }}" mode="cover"></image>
+    <text class="userinfo-nickname">{{ name }}</text>
+  </view>
+
+
+  <!-- 2.菜单列表：我的收藏、我的订阅、我要投稿 -->
+
+  <!-- 2.1 我的收藏 -->
+  <view class="collapse-header {{ active == 1 ? 'collapse-selected' : '' }} flex-container f-large" bindtap='collapse' data-current='1'>
+    <!-- 手风琴头部 -->
+    <view>我的收藏</view>
+    <view><van-icon name="arrow-down" /></view>
+  </view>
+  <view class="collapse-body {{ active == 1 ? 'collapse-unfold' : '' }}" data-current='1' wx:for='{{ favorites }}' wx:for-item='favorite' wx:key='k_favorites' wx:for-index='i_favorites'>
+    <!-- 手风琴主体 -->
+    <view class='collapse-item flex-container'>
+      <!-- 手风琴单体 -->
+      <text bindtap='jumpArticle' data-aid='{{ favorite.aid }}' class="flex-item-expand f-standard lh-46">{{ favorite.title }}</text>
+      <button bindtap='favorite' data-aid='{{ favorite.aid }}' data-favorite='{{ favorite.favorite }}' class='flex-item-shrink f-standard btn-cancel lh-46' hover-class='btn-cancel-hover'>取消收藏</button>
+    </view>
+  </view>
+
+  <!-- 2.2 我的订阅 -->
+  <view class="collapse-header {{ active == 2 ? 'collapse-selected' : '' }} flex-container f-large" bindtap='collapse' data-current='2'>
+    <!-- 手风琴头部 -->
+    <view>我的订阅</view>
+    <view><van-icon name="arrow-down" /></view>
+  </view>
+  <view class="collapse-body {{ active == 2 ? 'collapse-unfold' : '' }}" data-current='2' wx:for='{{ subscribes }}' wx:for-item='subscribe' wx:key='k_subscribes' wx:for-index='i_subscribes'>
+    <!-- 手风琴主体 -->
+    <view class='collapse-item flex-container'>
+      <!-- 手风琴单体 -->
+      <text bindtap='jumpArticle' data-aid='{{ subscribe.tid }}' class="flex-item-expand f-standard lh-46">{{ subscribe.tag }}</text>
+      <button bindtap='subscribe' data-aid='{{ subscribe.tid }}' data-favorite='{{ subscribe.subscribe }}' class='flex-item-shrink f-standard btn-cancel lh-46' hover-class='btn-cancel-hover'>取消订阅</button>
+    </view>
+  </view>
+
+
+  <!-- 3.我要投稿 -->
+  <view>我要投稿</view>
+
+</view>
+
+
+<!-- 未检测到用户登录时 -->
+<view wx:if='{{ !signin }}' class='jumbotron tips'>
+  <text>您现在还没有登录哦，\n请点击下方按钮进行登录</text>
+  <button open-type="getUserInfo" bindgetuserinfo="getInfo">登录</button>
+</view>

@@ -200,7 +200,7 @@ button::after {
   color: #f2826a;
   font-weight: bolder;
 }
-.collapse-item-unfold {
+.collapse-unfold {
   height: auto;
 }
 
