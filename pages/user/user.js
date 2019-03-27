@@ -151,7 +151,8 @@ Page({
   // 跳转至“文章”详情：传递 aid favorite，并添加点击量
   jumpArticle(event) {
     let aid = event.currentTarget.dataset.aid;
-    app.jumpArticle(aid)
+    let favorite = event.currentTarget.dataset.favorite
+    app.jumpArticle(aid, favorite)
   },
 
 })

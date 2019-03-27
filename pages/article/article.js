@@ -6,11 +6,21 @@ Page({
 
   // =========================绑定变量数据=============================
   data: {
-    favorite: false
+    // favorite: false
   },
 
   // =============================系统方法=============================
   onLoad: function(options) {
+    // 1.检查用户是否存在
+    if (app.checkUser()) {
+      this.setData({
+        uid: wx.getStorageSync('uid')
+      })
+    }
+    this.setData({
+      aid: options.aid,
+      favorite: options.favorite
+    })
     this.getHtml(options.aid)
   },
 
@@ -49,9 +59,32 @@ Page({
     });
   },
 
-  // 切换喜欢状态
-  switchLike(){
-    // TODO
+  // 切换【喜欢】状态
+  switchFavorite(event) {
+    let aid = event.currentTarget.dataset.aid;
+    let favorite = event.currentTarget.dataset.favorite;
+    let index = event.currentTarget.dataset.index;
+    let tindex = event.currentTarget.dataset.tindex;
+    if (app.checkUser()) {
+      // 换色
+      app.switchFavorite(this.data.uid, aid, favorite).then((res) => {
+        this.setData({
+          favorite: res
+        })
+      })
+    } else {
+      let info = app.getUserAuth(event)
+      if (info) {
+        app.userSignIn(info.name, info.avatar).then((res) => {
+          this.setData({
+            uid: res
+          })
+          this.specialColumn(this.data.tid)
+        })
+      } else {
+        console.log("用户拒绝了授权！")
+      }
+    }
   },
 
 })

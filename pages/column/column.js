@@ -6,10 +6,7 @@ Page({
 
   // =========================绑定变量数据=============================
   data: {
-    // sections: {}
   },
-
-
   // =============================系统方法=============================
   onLoad: function (options) {
     // 1.检查用户是否存在
@@ -18,15 +15,12 @@ Page({
         uid: wx.getStorageSync('uid')
       })
     }
-
-
     this.allSections();
   },
   
   onShow: function() {
     // this.allSections();
   },
-
 
   // ==============================绑定方法============================
 
@@ -52,7 +46,9 @@ Page({
   // 跳转至“文章”详情：传递 aid favorite，并添加点击量
   jumpArticle(event) {
     let aid = event.currentTarget.dataset.aid
-    app.jumpArticle(aid)
+    let favorite = event.currentTarget.dataset.favorite
+    app.jumpArticle(aid, favorite)
+
   },
 
 
@@ -68,14 +64,6 @@ Page({
           [`sections[${index}].subscribe`]: res
         })
       })
-
-      // let arr = this.data.topic
-      // arr['subscribe'] = !this.data.topic['subscribe']
-      // this.setData({
-      //   topic: arr
-      // })
-      // app.switchSubscribe(this.data.uid, this.data.tid, subscribe)
-
     } else {
       let info = app.getUserAuth(event)
       if (info) {
@@ -91,33 +79,20 @@ Page({
     }
   },
 
-
   // 切换【喜欢】状态
   switchFavorite(event) {
     let aid = event.currentTarget.dataset.aid;
     let favorite = event.currentTarget.dataset.favorite;
     let index = event.currentTarget.dataset.index;
     let tindex = event.currentTarget.dataset.tindex;
-    // console.log(index)
 
     if (app.checkUser()) {
       // 换色
       app.switchFavorite(this.data.uid, aid, favorite).then((res)=>{
-        // let arr = this.data.topic
-        // arr['articles'][index]['favorite'] = res
         this.setData({
-          // topic: arr
-          // [`topic['articles'][${index}].favorite`]: res
           [`sections[${tindex}].articles[${index}].favorite`]: res
         })
       })
-
-      // let arr = this.data.topic
-      // arr['articles'][index]['favorite'] = !this.data.topic['articles'][index]['favorite']
-      // this.setData({
-      //   topic: arr
-      // })
-      // app.switchFavorite(this.data.uid, aid, favorite)
 
     } else {
       let info = app.getUserAuth(event)

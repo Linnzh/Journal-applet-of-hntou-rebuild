@@ -1,5 +1,4 @@
 //app.js
-// let that = this;
 let promise = require('/utils/promise.js');
 
 App({
@@ -77,10 +76,10 @@ App({
   },
 
   // 跳转至 article
-  jumpArticle(aid) {
+  jumpArticle(aid, favorite) {
     this.addViews(aid)
     wx.navigateTo({
-      url: '/pages/article/article?aid=' + aid
+      url: '/pages/article/article?aid=' + aid + '&favorite=' + favorite
     })
   },
 

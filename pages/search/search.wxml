@@ -12,3 +12,38 @@
 </van-search>
 
 <!-- 2.Search Results -->
+<!-- 2.1 搜索结果有【栏目】 -->
+<view wx:if='{{ column }}'>
+  <!-- 以幻灯片形式播放 -->
+  <swiper indicator-dots='{{ indicatorDots }}' autoplay='{{ autoplay }}' interval='{{ interval }}' duration='{{ duration }}' class='h-200'>
+    
+    <block wx:for='{{ column }}' wx:for-item='column' wx:key='k_column' wx:for-index='i_column'>
+      <swiper-item class='jumbotron'>
+        <text class='top-view f-larger'>{{ column.tag }}</text>
+        <button bindtap='jumpTopic'>进入专题</button>
+      </swiper-item>
+    </block>
+  
+  </swiper>
+</view>
+
+<!-- 2.2 搜索结果有【文章】 -->
+<view wx:if='{{ articles }}'>
+  <!-- 列表形式展示简略信息 -->
+  <view wx:for='{{ articles }}' wx:for-item='article' wx:key='k_articles' wx:for-index='i_articles' class='mglr-10'>
+    <view class='flex-container' bindtap='jumpArticle' data-aid='{{ article.aid }}' data-favorite='{{ article.favorite }}'>
+      <view class='flex-item-original abbr-text'>
+        <view class='f-large van-ellipsis'>{{ article.title }}</view>
+        <view class='f-standard c-gray-selected van-multi-ellipsis--l2'>{{ article.abstract }}</view>
+      </view>
+      <view class='flex-item-original abbr-img'>
+        <image src='{{ article.first_img }}' mode='aspectFit' style="width:160rpx;height:160rpx;"></image>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 2.3 什么结果都没有 -->
+<view wx:if='!({{ column }} && {{ articles }})'>
+  没有找到任何符合条件的结果~
+</view>

@@ -75,7 +75,6 @@ Page({
   // 最新发布
   latestRelease(){
     if (this.data.uid) {
-      // let uid = wx.getStorageSync('uid');
       let url = app.globalData.baseUrl + 'index_latest_release.php';
       let data = {
         uid: this.data.uid
@@ -99,7 +98,6 @@ Page({
   // 近期热门
   recentlyPopular(){
     if (this.data.uid) {
-      // let uid = wx.getStorageSync('uid');
       let url = app.globalData.baseUrl + 'index_recently_popular.php';
       let data = {
         uid: this.data.uid
@@ -129,7 +127,8 @@ Page({
   // 跳转至“文章”详情：传递 aid favorite，并添加点击量
   jumpArticle(event){
     let aid = event.currentTarget.dataset.aid
-    app.jumpArticle(aid)
+    let favorite = event.currentTarget.dataset.favorite
+    app.jumpArticle(aid, favorite)
   },
 
 
@@ -150,19 +149,12 @@ Page({
         // 根据不同列表的点击，来识别哪个图标应该变色
         switch (list) {
           case 'latest': {
-            // let arr = this.data.latest;
-            // arr[index]['favorite'] = res;
             this.setData({
-              // latest: arr
-              // ["latest[" + index + "]['favorite']"] : res
               [`latest[${index}].favorite`]: res
             })
           } break;
           case 'recently': {
-            // let arr = this.data.recently;
-            // arr[index]['favorite'] = res;
             this.setData({
-              // recently: arr
               [`recently[${index}].favorite`]: res
             })
           } break;

@@ -5,7 +5,7 @@
   <view class='f-larger'>{{ article.title }}</view>
   <view class='flex-container mrt-10'>
     <view class='flex-item-expand c-gray'>{{ article.time }}</view>
-    <button open-type='getUserInfo' bindgetuserinfo='switchLike' data-aid='{{ aid }}' class='btn-star flex-item-original' style="color: red">
+    <button open-type='getUserInfo' bindgetuserinfo='switchFavorite' data-aid='{{ aid }}' class='btn-star flex-item-original' style="color: '{{ favorite }} ? red : black'">
       <van-icon name="star-o" />
     </button>
   </view>

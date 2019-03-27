@@ -58,7 +58,8 @@ Page({
   // 跳转至“文章”详情：传递 aid favorite，并添加点击量
   jumpArticle(event) {
     let aid = event.currentTarget.dataset.aid
-    app.jumpArticle(aid)
+    let favorite = event.currentTarget.dataset.favorite
+    app.jumpArticle(aid, favorite)
   },
 
 
@@ -68,21 +69,10 @@ Page({
     
     if(app.checkUser()) {
       app.switchSubscribe(this.data.uid, this.data.tid, subscribe).then((res) => {
-        // let arr = this.data.topic
-        // arr['subscribe'] = res
         this.setData({
-          // topic: arr
           [`topic.subscribe`]: res
         })
       })
-
-      // let arr = this.data.topic
-      // arr['subscribe'] = !this.data.topic['subscribe']
-      // this.setData({
-      //   topic: arr
-      // })
-      // app.switchSubscribe(this.data.uid, this.data.tid, subscribe)
-
     } else {
       let info = app.getUserAuth(event)
       if (info) {
@@ -104,27 +94,13 @@ Page({
     let aid = event.currentTarget.dataset.aid;
     let favorite = event.currentTarget.dataset.favorite;
     let index = event.currentTarget.dataset.index;
-    // console.log(index)
-
     if(app.checkUser()) {
       // 换色
       app.switchFavorite(this.data.uid, aid, favorite).then((res)=>{
-        // let arr = this.data.topic
-        // arr['articles'][index]['favorite'] = res
         this.setData({
-          // topic: arr
-          // [`topic['articles'][${index}].favorite`]: res
           [`topic.articles[${index}].favorite`]: res
         })
-      })
-
-      // let arr = this.data.topic
-      // arr['articles'][index]['favorite'] = !this.data.topic['articles'][index]['favorite']
-      // this.setData({
-      //   topic: arr
-      // })
-      // app.switchFavorite(this.data.uid, aid, favorite)
-      
+      })      
     } else {
       let info = app.getUserAuth(event)
       if (info) {
