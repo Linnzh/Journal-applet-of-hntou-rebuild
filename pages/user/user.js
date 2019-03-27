@@ -155,4 +155,6 @@ Page({
     app.jumpArticle(aid, favorite)
   },
 
+
+
 })

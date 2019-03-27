@@ -44,7 +44,7 @@
 
 
   <!-- 3.我要投稿 -->
-  <view>我要投稿</view>
+  <view class='f-large c-gray'>我要投稿</view>
 
 </view>
 
