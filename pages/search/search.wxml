@@ -20,7 +20,7 @@
     <block wx:for='{{ column }}' wx:for-item='column' wx:key='k_column' wx:for-index='i_column'>
       <swiper-item class='jumbotron'>
         <text class='top-view f-larger'>{{ column.tag }}</text>
-        <button bindtap='jumpTopic'>进入专题</button>
+        <button bindtap='jumpTopic' data-tid='{{ column.tid }}'>进入专题</button>
       </swiper-item>
     </block>
   
@@ -44,6 +44,6 @@
 </view>
 
 <!-- 2.3 什么结果都没有 -->
-<view wx:if='!({{ column }} && {{ articles }})'>
+<!-- <view wx:if='!({{ column }} && {{ articles }})'>
   没有找到任何符合条件的结果~
-</view>
+</view> -->

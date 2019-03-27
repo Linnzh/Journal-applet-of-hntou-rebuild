@@ -29,6 +29,8 @@ Page({
       })
     }
 
+    this.onSearch()
+
   },
 
   onChange(event) {
@@ -44,12 +46,12 @@ Page({
 
   // ==============================绑定方法============================
 
-  onSearch(event){
+  onSearch(){
     let url = app.globalData.baseUrl + 'search.php'
     let data
     if(this.data.uid) {
       data = {
-        uid: uid,
+        uid: this.data.uid,
         kw: this.data.searchValue
       }
     } else {
