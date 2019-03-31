@@ -18,8 +18,8 @@ Page({
     this.allSections();
   },
   
-  onShow: function() {
-    // this.allSections();
+  onShow() {
+    this.onLoad()
   },
 
   // ==============================绑定方法============================

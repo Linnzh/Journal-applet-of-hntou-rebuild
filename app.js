@@ -77,6 +77,9 @@ App({
 
   // 跳转至 article
   jumpArticle(aid, favorite) {
+    wx.setStorageSync('aid', aid)
+    wx.setStorageSync('favorite', favorite)
+
     this.addViews(aid)
     wx.navigateTo({
       url: '/pages/article/article?aid=' + aid + '&favorite=' + favorite
@@ -85,6 +88,8 @@ App({
 
   // 跳转至 topic
   jumpTopic(tid) {
+    wx.setStorageSync('tid', tid)
+    
     wx.navigateTo({
       url: '/pages/topic/topic?tid=' + tid
     })

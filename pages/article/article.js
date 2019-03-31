@@ -18,10 +18,16 @@ Page({
       })
     }
     this.setData({
-      aid: options.aid,
-      favorite: options.favorite
+      // aid: options.aid,
+      // favorite: options.favorite
+      aid: wx.getStorageSync('aid'),
+      favorite: wx.getStorageSync('favorite')
     })
     this.getHtml(options.aid)
+  },
+
+  onShow(options) {
+    // this.onLoad(options)
   },
 
 
@@ -63,8 +69,8 @@ Page({
   switchFavorite(event) {
     let aid = event.currentTarget.dataset.aid;
     let favorite = event.currentTarget.dataset.favorite;
-    let index = event.currentTarget.dataset.index;
-    let tindex = event.currentTarget.dataset.tindex;
+    // let index = event.currentTarget.dataset.index;
+    // let tindex = event.currentTarget.dataset.tindex;
     if (app.checkUser()) {
       // 换色
       app.switchFavorite(this.data.uid, aid, favorite).then((res) => {

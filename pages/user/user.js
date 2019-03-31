@@ -38,6 +38,10 @@ Page({
     wx.stopPullDownRefresh();
   },
 
+  onShow() {
+    this.onLoad()
+  },
+
   // ==============================绑定方法============================
 
   mySignin(event){

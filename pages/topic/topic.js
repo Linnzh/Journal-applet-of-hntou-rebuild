@@ -19,7 +19,8 @@ Page({
       })
     }
 
-    let tid = options.tid;
+    // let tid = options.tid;
+    let tid = wx.getStorageSync('tid');
     this.setData({
       tid: tid
     })
@@ -30,7 +31,10 @@ Page({
     this.specialColumn(this.data.tid)
     wx.stopPullDownRefresh();
   },
-
+  
+  onShow() {
+    this.onLoad()
+  },
 
   // ==============================绑定方法============================
 
