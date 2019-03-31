@@ -23,7 +23,7 @@ Page({
     })
 
     // 检查用户是否存在
-    if (app.checkUser()) {
+    if (wx.getStorageSync('uid')) {
       this.setData({
         uid: wx.getStorageSync('uid')
       })
@@ -46,10 +46,10 @@ Page({
 
   // ==============================绑定方法============================
 
-  onSearch(){
+  onSearch() {
     let url = app.globalData.baseUrl + 'search.php'
     let data
-    if(this.data.uid) {
+    if (this.data.uid) {
       data = {
         uid: this.data.uid,
         kw: this.data.searchValue
@@ -59,7 +59,7 @@ Page({
         kw: this.data.searchValue
       }
     }
-    promise.request(url, data).then((res)=>{
+    promise.request(url, data).then((res) => {
       this.setData({
         column: res.column,
         articles: res.articles
@@ -82,7 +82,4 @@ Page({
     app.jumpArticle(aid, favorite)
   },
 
-
-
-  
 })

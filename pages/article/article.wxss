@@ -8,3 +8,8 @@
   bottom: 30px;
   right: 10px;
 }
+
+.comment {
+  position: fixed;
+  bottom: 0;
+}

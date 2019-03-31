@@ -16,7 +16,7 @@ Page({
 
   // =============================系统方法=============================
   onLoad: function (options) {
-    if(app.checkUser()) {
+    if (wx.getStorageSync('uid')) {
       this.setData({
         name: wx.getStorageSync('name'),
         avatar: wx.getStorageSync('avatar'),
@@ -44,9 +44,9 @@ Page({
 
   // ==============================绑定方法============================
 
-  mySignin(event){
+  mySignin(event) {
     let info = app.getUserAuth(event)
-    if(info) {
+    if (info) {
       app.userSignIn(info.name, info.avatar).then((res) => {
         this.setData({
           uid: res,
@@ -61,12 +61,12 @@ Page({
   },
 
   // 我的喜欢-列表
-  myFavorites(){
+  myFavorites() {
     let url = app.globalData.baseUrl + 'user_favorite_list.php'
     let data = {
       uid: this.data.uid
     }
-    promise.request(url, data).then((res)=>{
+    promise.request(url, data).then((res) => {
       this.setData({
         favorites: res
       })
@@ -74,7 +74,7 @@ Page({
   },
 
   // 我的订阅-列表
-  mySubscribes(){
+  mySubscribes() {
     let url = app.globalData.baseUrl + 'user_subscribe_list.php'
     let data = {
       uid: this.data.uid
@@ -87,7 +87,7 @@ Page({
   },
 
   // 手风琴效果
-  collapse(event){
+  collapse(event) {
     this.data.current = event.currentTarget.dataset.current
     let res = mobility.collapse(this.data.current, this.data.previous, this.data.active);
     this.setData({
@@ -97,15 +97,15 @@ Page({
   },
 
   // 取消收藏
-  cancelFavorite(event){
+  cancelFavorite(event) {
     let aid = event.currentTarget.dataset.aid
     let url = app.globalData.baseUrl + 'user_cancel_favorite.php'
     let data = {
       uid: this.data.uid,
       aid: aid
     }
-    promise.request(url, data).then(()=>{
-      let arr = mobility.checkToMove(event.currentTarget.dataset.index, this.favorites)
+    promise.request(url, data).then(() => {
+      let arr = mobility.checkToMove(event.currentTarget.dataset.index, this.data.favorites)
       this.setData({
         favorites: arr
       })
@@ -118,14 +118,14 @@ Page({
 
 
   // 取消订阅
-  cancelSubscribe(event){
+  cancelSubscribe(event) {
     let that = this
     let tag = event.currentTarget.dataset.tag
     wx.showModal({
       title: '提示',
       content: '您确定取消订阅' + tag + '吗?',
       success(res) {
-        if(res.confirm) {
+        if (res.confirm) {
           let tid = event.currentTarget.dataset.tid
           let url = app.globalData.baseUrl + 'user_cancel_subscribe.php'
           let data = {
@@ -138,12 +138,12 @@ Page({
               subscribes: arr
             })
           })
-        } else if(res.cancel) {
+        } else if (res.cancel) {
           // 用户取消了操作
         }
       }
     })
-    
+
   },
 
   // 跳转至“栏目”详情：传递 tid
@@ -159,6 +159,12 @@ Page({
     app.jumpArticle(aid, favorite)
   },
 
-
+  submit(event) {
+    wx.showToast({
+      title: '暂不支持投稿！',
+      icon: 'none',
+      duration: 1000
+    })
+  },
 
 })

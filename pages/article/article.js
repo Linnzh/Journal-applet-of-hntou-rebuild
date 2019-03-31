@@ -6,20 +6,18 @@ Page({
 
   // =========================绑定变量数据=============================
   data: {
-    // favorite: false
+
   },
 
   // =============================系统方法=============================
-  onLoad: function(options) {
+  onLoad: function (options) {
     // 1.检查用户是否存在
-    if (app.checkUser()) {
+    if (wx.getStorageSync('uid')) {
       this.setData({
         uid: wx.getStorageSync('uid')
       })
     }
     this.setData({
-      // aid: options.aid,
-      // favorite: options.favorite
       aid: wx.getStorageSync('aid'),
       favorite: wx.getStorageSync('favorite')
     })
@@ -53,7 +51,7 @@ Page({
     let data = {
       aid: aid
     };
-    promise.request(url, data).then((res)=>{
+    promise.request(url, data).then((res) => {
       let html = `<div class='article'>${res.html}</div>`;
       this.setData({
         html: html,
@@ -69,9 +67,7 @@ Page({
   switchFavorite(event) {
     let aid = event.currentTarget.dataset.aid;
     let favorite = event.currentTarget.dataset.favorite;
-    // let index = event.currentTarget.dataset.index;
-    // let tindex = event.currentTarget.dataset.tindex;
-    if (app.checkUser()) {
+    if (wx.getStorageSync('uid')) {
       // 换色
       app.switchFavorite(this.data.uid, aid, favorite).then((res) => {
         this.setData({
@@ -92,5 +88,7 @@ Page({
       }
     }
   },
+
+
 
 })

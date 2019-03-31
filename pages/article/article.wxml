@@ -22,3 +22,11 @@
     <image src='backtop.png' style='width:32px;height:32px;'></image>
   </button>
 </view>
+
+
+<!-- 4.添加评论 -->
+<view>
+
+  <button bindtap='comment' class='comment'>评论</button>
+
+</view>

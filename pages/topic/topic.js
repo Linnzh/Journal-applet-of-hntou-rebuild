@@ -13,7 +13,7 @@ Page({
   // =============================系统方法=============================
   onLoad: function (options) {
     // 1.检查用户是否存在
-    if (app.checkUser()) {
+    if (wx.getStorageSync('uid')) {
       this.setData({
         uid: wx.getStorageSync('uid')
       })
@@ -31,7 +31,7 @@ Page({
     this.specialColumn(this.data.tid)
     wx.stopPullDownRefresh();
   },
-  
+
   onShow() {
     this.onLoad()
   },
@@ -39,10 +39,10 @@ Page({
   // ==============================绑定方法============================
 
   // 专栏文章列表
-  specialColumn(tid){
+  specialColumn(tid) {
     let url = app.globalData.baseUrl + 'column_get_articles.php';
     let data;
-    if(app.checkUser()) {
+    if (wx.getStorageSync('uid')) {
       data = {
         tid: tid,
         uid: this.data.uid
@@ -52,7 +52,7 @@ Page({
         tid: tid
       }
     }
-    promise.request(url, data).then((res)=>{
+    promise.request(url, data).then((res) => {
       this.setData({
         topic: res
       })
@@ -70,8 +70,8 @@ Page({
   // 切换【订阅】状态
   switchSubscribe(event) {
     let subscribe = event.currentTarget.dataset.subscribe
-    
-    if(app.checkUser()) {
+
+    if (wx.getStorageSync('uid')) {
       app.switchSubscribe(this.data.uid, this.data.tid, subscribe).then((res) => {
         this.setData({
           [`topic.subscribe`]: res
@@ -98,13 +98,13 @@ Page({
     let aid = event.currentTarget.dataset.aid;
     let favorite = event.currentTarget.dataset.favorite;
     let index = event.currentTarget.dataset.index;
-    if(app.checkUser()) {
+    if (wx.getStorageSync('uid')) {
       // 换色
-      app.switchFavorite(this.data.uid, aid, favorite).then((res)=>{
+      app.switchFavorite(this.data.uid, aid, favorite).then((res) => {
         this.setData({
           [`topic.articles[${index}].favorite`]: res
         })
-      })      
+      })
     } else {
       let info = app.getUserAuth(event)
       if (info) {

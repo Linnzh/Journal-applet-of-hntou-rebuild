@@ -19,12 +19,12 @@ App({
   // =====================全局基本操作=======================
 
   // checkUser()：检查用户是否已登录。检查本地存储是否有 UID
-  checkUser() {
-    if (wx.getStorageSync('uid') !== '') {
-      return true;
-    }
-    return false;
-  },
+  // checkUser() {
+  //   if (wx.getStorageSync('uid') !== '') {
+  //     return true;
+  //   }
+  //   return false;
+  // },
 
   // getUserAuth(event)：获取用户授权，同时获取用户基本信息并存入本地存储
   getUserAuth(event) {

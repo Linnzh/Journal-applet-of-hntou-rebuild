@@ -10,14 +10,14 @@ Page({
   // =============================系统方法=============================
   onLoad: function (options) {
     // 1.检查用户是否存在
-    if (app.checkUser()) {
+    if (wx.getStorageSync('uid')) {
       this.setData({
         uid: wx.getStorageSync('uid')
       })
     }
     this.allSections();
   },
-  
+
   onShow() {
     this.onLoad()
   },
@@ -27,15 +27,16 @@ Page({
   allSections() {
     let url = app.globalData.baseUrl + 'column_tags_list.php';
     let data;
-    if(app.checkUser()) {
+    if (wx.getStorageSync('uid')) {
       data = {
-        uid: this.data.uid
+        uid: wx.getStorageSync('uid')
       };
+
     } else {
       data = {};
     }
     let that = this;
-    promise.request(url, data).then((res)=>{
+    promise.request(url, data).then((res) => {
       that.setData({
         sections: res,
         list: true
@@ -58,7 +59,7 @@ Page({
     let tid = event.currentTarget.dataset.tid
     let index = event.currentTarget.dataset.index
 
-    if (app.checkUser()) {
+    if (wx.getStorageSync('uid')) {
       app.switchSubscribe(this.data.uid, tid, subscribe).then((res) => {
         this.setData({
           [`sections[${index}].subscribe`]: res
@@ -86,9 +87,9 @@ Page({
     let index = event.currentTarget.dataset.index;
     let tindex = event.currentTarget.dataset.tindex;
 
-    if (app.checkUser()) {
+    if (wx.getStorageSync('uid')) {
       // 换色
-      app.switchFavorite(this.data.uid, aid, favorite).then((res)=>{
+      app.switchFavorite(this.data.uid, aid, favorite).then((res) => {
         this.setData({
           [`sections[${tindex}].articles[${index}].favorite`]: res
         })
