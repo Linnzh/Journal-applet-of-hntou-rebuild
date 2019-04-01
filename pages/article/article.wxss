@@ -5,14 +5,23 @@
 }
 .fixed {
   position: fixed;
-  bottom: 30px;
+  bottom: 40px;
   right: 10px;
+}
+
+.comment-item {
+  display: block;
+  background-color: green;
+  padding-left: 10px;
+  margin-bottom: 10px;
 }
 
 .comment {
   position: fixed;
   bottom: 0;
+  width: 100%;
+  /* right: 0; */
   
-  display: block;
-  margin: 0 auto;
+  /* display: block; */
+  /* margin: 0 auto; */
 }

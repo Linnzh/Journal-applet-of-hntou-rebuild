@@ -17,56 +17,49 @@
 </view>
 
 <!-- 3.返回顶部图标 -->
-<view>
+<!-- <view>
   <button bindtap='backtop' class='btn-plain fixed'>
     <image src='backtop.png' style='width:32px;height:32px;'></image>
   </button>
-</view>
+</view> -->
 
-
-<!-- 4.添加评论 -->
 <view>
 
-  <!-- <button bindtap='comment' class='comment'>评论</button> -->
-  <!-- <van-icon name="add" class='comment' color='green' size='35px' /> -->
+<!-- 评论列表 -->
+  <view class='comment-item'>第一条评论第一条评论第一条评论第一条评论第一条评论第一条评论第一条评论</view>
+  <view class='comment-item'>第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论</view>
+  <view class='comment-item'>第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论</view>
+  <view class='comment-item'>第一条评论第一条评论第一条评论第一条评论第一条评论第一条评论第一条评论</view>
+  <view class='comment-item'>第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论</view>
+  <view class='comment-item'>第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论</view>
+  <view class='comment-item'>第一条评论第一条评论第一条评论第一条评论第一条评论第一条评论第一条评论</view>
+  <view class='comment-item'>第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论</view>
+  <view class='comment-item'>第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论</view>
+</view>
 
-
-<!-- 
-  <van-cell-group>
-    <van-field
-      value='{{ comment }}'
-      type='textarea'
-      autosize
-      required
-      clearable
-      border='{{ false }}'
-      label='评论'
-      icon='add'
-      placeholder='留下评论'
-    >
-      <van-button slot='button' size='small' type='primary'>评论</van-button>
-    </van-field>
-  </van-cell-group>
-
-   -->
+<!-- 4.添加评论 -->
+<view class='comment'>
 
   <van-cell-group>
     <van-field
       value='{{ comment }}'
-      type='textarea'
-      autosize
+      type='text'
+      center
       clearable
-      border='{{ false }}'
+      border='{{ true }}'
       fixed='{{ true }}'
       use-icon-slot='{{ true }}'
-      use-button-slot='{{ true }}'
+      use-button-slot
       icon='add'
       placeholder='留下评论'
       maxlength='255'
       size='large'
+
+      value='{{ comment }}'
+      bind:change='onChange'
+      bind:confirm="comment"
     >
-      <van-button slot='button' size='large' type='primary'>评论</van-button>
-      <!-- <van-icon name="add" color='green' size='35px' /> -->
+      <van-button slot='button' size='large' type='primary' bindtap="comment">评论</van-button>
     </van-field>
   </van-cell-group>
 

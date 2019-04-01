@@ -6,7 +6,7 @@ Page({
 
   // =========================绑定变量数据=============================
   data: {
-
+    comment: ''
   },
 
   // =============================系统方法=============================
@@ -88,6 +88,20 @@ Page({
       }
     }
   },
+
+
+  onChange(event) {
+    this.setData({
+      comment: event.detail
+    })
+  },
+  comment(event){
+    // console.log('按下了评论按钮');
+    // console.log(event)
+    console.log(this.data.comment)
+  },
+
+
 
 
 
