@@ -11,11 +11,6 @@
   </view>
 </view>
 
-<!-- 2.HTML字符串富文本内容 -->
-<view class='mglr-10 mgtb-10'>
-  <rich-text nodes='{{ article.html }}'></rich-text>
-</view>
-
 <!-- 3.返回顶部图标 -->
 <!-- <view>
   <button bindtap='backtop' class='btn-plain fixed'>
@@ -23,42 +18,38 @@
   </button>
 </view> -->
 
-<view>
 
-<!-- 评论列表 -->
-  <view class='comment-item'>第一条评论第一条评论第一条评论第一条评论第一条评论第一条评论第一条评论</view>
-  <view class='comment-item'>第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论</view>
-  <view class='comment-item'>第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论</view>
-  <view class='comment-item'>第一条评论第一条评论第一条评论第一条评论第一条评论第一条评论第一条评论</view>
-  <view class='comment-item'>第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论</view>
-  <view class='comment-item'>第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论</view>
-  <view class='comment-item'>第一条评论第一条评论第一条评论第一条评论第一条评论第一条评论第一条评论</view>
-  <view class='comment-item'>第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论</view>
-  <view class='comment-item'>第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论第二条评论</view>
-</view>
+<scroll-view scroll-y id='scroll_page' style='height:950rpx' scroll-top='1'>
+
+  <!-- 2.HTML字符串富文本内容 -->
+  <view class='mglr-10 mgtb-10'>
+    <rich-text nodes='{{ article.html }}'></rich-text>
+  </view>
+
+
+  <!-- 评论列表 -->
+  <view wx:if='{{ comments }}'>评论列表
+    <view wx:for='{{ comments }}' wx:key='k_comments' wx:for-item='comment' wx:for-index='i_comments' class='comments-list'>
+      <view class='flex-container'>
+        <image class='flex-item-original comment-avatar' src='{{ comment.uavatar }}'></image>
+        <view class='flex-item-zoom'>
+          <view class='comment-name'>{{ comment.uname }}</view>
+          <view class='comment-comment'>{{ comment.comment }}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</scroll-view>
+
+
+
+
 
 <!-- 4.添加评论 -->
 <view class='comment'>
 
   <van-cell-group>
-    <van-field
-      value='{{ comment }}'
-      type='text'
-      center
-      clearable
-      border='{{ true }}'
-      fixed='{{ true }}'
-      use-icon-slot='{{ true }}'
-      use-button-slot
-      icon='add'
-      placeholder='留下评论'
-      maxlength='255'
-      size='large'
-
-      value='{{ comment }}'
-      bind:change='onChange'
-      bind:confirm="comment"
-    >
+    <van-field value='{{ comment }}' type='text' center clearable border='{{ true }}' fixed='{{ true }}' use-icon-slot='{{ true }}' use-button-slot icon='add' placeholder='留下评论' maxlength='255' size='large' value='{{ comment }}' bind:change='onChange' bind:confirm="comment">
       <van-button slot='button' size='large' type='primary' bindtap="comment">评论</van-button>
     </van-field>
   </van-cell-group>

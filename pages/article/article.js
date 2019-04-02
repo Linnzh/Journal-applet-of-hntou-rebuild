@@ -55,7 +55,9 @@ Page({
       let html = `<div class='article'>${res.html}</div>`;
       this.setData({
         html: html,
-        article: res
+        article: res,
+
+        comments: res.comment
       });
       wx.setNavigationBarTitle({
         title: res.title
@@ -95,10 +97,38 @@ Page({
       comment: event.detail
     })
   },
+
+  pageScrollToBottom: function () {
+    wx.createSelectorQuery().select('#scroll_page').boundingClientRect(function (rect) {
+      // 使页面滚动到底部
+      wx.pageScrollTo({
+        scrollTop: rect.height
+      })
+    }).exec()
+  },
+
   comment(event){
-    // console.log('按下了评论按钮');
-    // console.log(event)
-    console.log(this.data.comment)
+    let url = app.globalData.baseUrl + 'article_add_comment.php'
+    let data = {
+      aid: this.data.aid,
+      uid: this.data.uid,
+      comment: this.data.comment
+    }
+    promise.request(url, data).then((res)=>{
+      let index = 0;
+      if(this.data.article.comment) {
+        index = this.data.article.comment.length 
+      }
+      this.setData({
+        [`comments[${index}].uavatar`]: wx.getStorageSync('avatar'),
+        [`comments[${index}].uname`]: wx.getStorageSync('name'),
+        [`comments[${index}].comment`]: this.data.comment,
+        comment: ''
+      })
+
+      this.pageScrollToBottom()
+
+    })
   },
 
 
