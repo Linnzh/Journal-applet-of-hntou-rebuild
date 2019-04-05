@@ -8,7 +8,7 @@ App({
   // 全局变量
   globalData: {
     userInfo: null,
-    baseUrl: 'http://localhost:8081/app/applet/'
+    baseUrl: 'http://localhost:8081/Journal-management-website/app/applet/'
   },
 
   onLaunch: function() {
