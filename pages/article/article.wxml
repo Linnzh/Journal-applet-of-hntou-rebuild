@@ -19,7 +19,7 @@
 </view> -->
 
 
-<scroll-view scroll-y id='scroll_page' style='height:950rpx' scroll-top='1'>
+<scroll-view scroll-y id='scroll_page' style='height:950rpx' scroll-top='1' class='scroll'>
 
   <!-- 2.HTML字符串富文本内容 -->
   <view class='mglr-10 mgtb-10'>
@@ -39,6 +39,7 @@
       </view>
     </view>
   </view>
+
 </scroll-view>
 
 

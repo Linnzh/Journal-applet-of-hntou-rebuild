@@ -12,6 +12,9 @@ Page({
     autoplay: true,
     interval: 5000,
     duration: 1000,
+
+    column:[],
+    articles:[]
   },
 
 
@@ -35,11 +38,12 @@ Page({
 
   onChange(event) {
     this.setData({
-      searchValue: e.detail
+      searchValue: event.detail
     })
   },
 
   onPullDownRefresh: function () {
+    this.onSearch()
     wx.stopPullDownRefresh();
   },
 
@@ -59,11 +63,35 @@ Page({
         kw: this.data.searchValue
       }
     }
+
     promise.request(url, data).then((res) => {
-      this.setData({
-        column: res.column,
-        articles: res.articles
-      })
+      if( res ) {
+        this.setData({
+          noResult: false
+        })
+        if (res.column) {
+          this.setData({
+            column: res.column
+          })
+        } else {
+          this.setData({
+            column: []
+          })
+        }
+        if (res.articles) {
+          this.setData({
+            articles: res.articles
+          })
+        } else {
+          this.setData({
+            articles: []
+          })
+        }
+      } else {
+        this.setData({
+          noResult: true
+        })
+      }
     })
 
   },

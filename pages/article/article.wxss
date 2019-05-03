@@ -12,6 +12,7 @@
 .commnets-list {
   display: inline-block;
   margin-bottom: 60rpx;
+  
 }
 .comment-name {
   /* display: block; */
@@ -28,14 +29,18 @@
   border-radius: 50%;
 }
 
+.scroll {
+  padding-bottom: 90rpx;
+}
+
 .comment-comment {
   display: block;
   word-break:break-all;
 }
 
 .comment {
-  position: absolute;
+  /* position: absolute; */
   bottom: 0;
   width: 100%;
+  margin-top: -90rpx;
 }
-

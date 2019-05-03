@@ -13,6 +13,13 @@
   box-sizing: border-box;
 } 
 
+.right {
+  float: right
+}
+.right-btn {
+  width: 80pt;
+}
+
 /* ************************************************************************** */
 /* 颜色样式设定 */
 .c-standard {

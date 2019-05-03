@@ -1,34 +1,30 @@
 <!--pages/search/search.wxml-->
 
 <!-- 1.Search -->
-<van-search
-    value="{{ searchValue }}"
-    placeholder="请输入搜索关键词"
-    use-action-slot
-    bind:change="onChange"
-    bind:search="onSearch"
-  >
-    <view slot="action" bind:tap="onSearch">搜索</view>
+<van-search value="{{ searchValue }}" placeholder="请输入搜索关键词" use-action-slot bind:change="onChange" bind:search="onSearch">
+  <view slot="action" bind:tap="onSearch">搜索</view>
 </van-search>
+
+<!-- <view>{{ articles }}</view> -->
 
 <!-- 2.Search Results -->
 <!-- 2.1 搜索结果有【栏目】 -->
-<view wx:if='{{ column }}'>
+<view wx:if='{{ column.length > 0 }}'>
   <!-- 以幻灯片形式播放 -->
   <swiper indicator-dots='{{ indicatorDots }}' autoplay='{{ autoplay }}' interval='{{ interval }}' duration='{{ duration }}' class='h-200'>
-    
+
     <block wx:for='{{ column }}' wx:for-item='column' wx:key='k_column' wx:for-index='i_column'>
       <swiper-item class='jumbotron'>
         <text class='top-view f-larger'>{{ column.tag }}</text>
         <button bindtap='jumpTopic' data-tid='{{ column.tid }}'>进入专题</button>
       </swiper-item>
     </block>
-  
+
   </swiper>
 </view>
 
 <!-- 2.2 搜索结果有【文章】 -->
-<view wx:if='{{ articles }}'>
+<view wx:if='{{ articles.length > 0 }}'>
   <!-- 列表形式展示简略信息 -->
   <view wx:for='{{ articles }}' wx:for-item='article' wx:key='k_articles' wx:for-index='i_articles' class='mglr-10'>
     <view class='flex-container' bindtap='jumpArticle' data-aid='{{ article.aid }}' data-favorite='{{ article.favorite }}'>
@@ -43,7 +39,8 @@
   </view>
 </view>
 
+
 <!-- 2.3 什么结果都没有 -->
-<!-- <view wx:if='!({{ column }} && {{ articles }})'>
+<view wx:if='{{ noResult }}'>
   没有找到任何符合条件的结果~
-</view> -->
+</view>
