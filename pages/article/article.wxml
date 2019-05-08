@@ -51,7 +51,8 @@
 
   <van-cell-group>
     <van-field value='{{ comment }}' type='text' center clearable border='{{ true }}' fixed='{{ true }}' use-icon-slot='{{ true }}' use-button-slot icon='add' placeholder='留下评论' maxlength='255' size='large' value='{{ comment }}' bind:change='onChange' bind:confirm="comment">
-      <van-button slot='button' size='large' type='primary' bindtap="comment">评论</van-button>
+    <!-- 需要验证是否登陆 -->
+      <van-button slot='button' size='large' type='primary' open-type='getUserInfo' bindgetuserinfo='comment'>评论</van-button>
     </van-field>
   </van-cell-group>
 

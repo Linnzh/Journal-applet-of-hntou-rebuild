@@ -107,28 +107,35 @@ Page({
     }).exec()
   },
 
-  comment(event){
-    let url = app.globalData.baseUrl + 'article_add_comment.php'
-    let data = {
-      aid: this.data.aid,
-      uid: this.data.uid,
-      comment: this.data.comment
-    }
-    promise.request(url, data).then((res)=>{
-      let index = 0;
-      if(this.data.article.comment) {
-        index = this.data.article.comment.length 
+  comment(event) {
+
+    if (this.data.uid && this.data.comment !== '') {
+      let url = app.globalData.baseUrl + 'article_add_comment.php'
+      let data = {
+        aid: this.data.aid,
+        uid: this.data.uid,
+        comment: this.data.comment
       }
-      this.setData({
-        [`comments[${index}].uavatar`]: wx.getStorageSync('avatar'),
-        [`comments[${index}].uname`]: wx.getStorageSync('name'),
-        [`comments[${index}].comment`]: this.data.comment,
-        comment: ''
+      promise.request(url, data).then((res)=>{
+        let index = 0;
+        if(this.data.article.comment) {
+          index = this.data.article.comment.length 
+        }
+        this.setData({
+          [`comments[${index}].uavatar`]: wx.getStorageSync('avatar'),
+          [`comments[${index}].uname`]: wx.getStorageSync('name'),
+          [`comments[${index}].comment`]: this.data.comment,
+          comment: ''
+        })
+
+        this.pageScrollToBottom()
       })
-
-      this.pageScrollToBottom()
-
-    })
+    } else if(this.data.comment == ''){
+      wx.showToast({
+        title: '不允许发送空评论！',
+        duration: 2000
+      })
+    }
   },
 
 

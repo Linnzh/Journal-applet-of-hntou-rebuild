@@ -52,5 +52,5 @@
 <!-- 未检测到用户登录时 -->
 <view wx:if='{{ !signin }}' class='jumbotron tips'>
   <text>您现在还没有登录哦，\n请点击下方按钮进行登录</text>
-  <button open-type="getUserInfo" bindgetuserinfo="getInfo">登录</button>
+  <button open-type="getUserInfo" bindgetuserinfo="mySignin">登录</button>
 </view>
